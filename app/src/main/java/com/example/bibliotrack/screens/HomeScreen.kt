@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.material3.BottomAppBar
@@ -53,8 +55,8 @@ fun HomeScreen(
     ) {
 
         Column (modifier = Modifier
-            .padding(top = 84.dp), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally){
-            Text("Welcome to BiblioTrack!")
+            .fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally){
+            Text("Welcome to BiblioTrack!", modifier = Modifier.padding(bottom = 24.dp))
             Button(onClick ={
                 navController.navigate(route = AppScreens.BookListScreen.name)}
             ) {
