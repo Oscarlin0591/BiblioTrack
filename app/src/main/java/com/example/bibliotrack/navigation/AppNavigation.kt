@@ -26,6 +26,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.bibliotrack.model.BookViewModel
+import com.example.bibliotrack.screens.AboutScreen
+import com.example.bibliotrack.screens.BookListScreen
+import com.example.bibliotrack.screens.ColorChangeScreen
 import com.example.bibliotrack.screens.HomeScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -79,7 +82,7 @@ fun AppBar(
                 }
             }
             IconButton(
-                onClick = {navController.navigate(route = AppScreens.SettingScreen.name)}
+                onClick = {navController.navigate(route = AppScreens.ColorChangeScreen.name)}
             ) {
                 Icon(Icons.Default.Settings, contentDescription = null)
             }
@@ -110,6 +113,13 @@ fun BookNavigation() {
 //                bookViewModel
             )
         }
+
+        composable(AppScreens.BookListScreen.name) {
+            BookListScreen(
+                navController = navController
+            )
+        }
+
         composable(AppScreens.DetailScreen.name + "/{title}",
 //            arguments = listOf(navArgument(name = "title") { type = NavType.StringType})
         ) { backStackEntry ->
@@ -119,16 +129,16 @@ fun BookNavigation() {
 //            )
         }
         composable(AppScreens.AboutScreen.name) {
-//            AboutScreen(
-//                navController = navController,
+            AboutScreen(
+                navController = navController,
 //                bookViewModel
-//            )
+            )
         }
-        composable(AppScreens.SettingScreen.name) {
-//            SettingScreen(
-//                navController = navController,
+        composable(AppScreens.ColorChangeScreen.name) {
+            ColorChangeScreen(
+                navController = navController,
 //                bookViewModel
-//            )
+            )
         }
     }
 }
