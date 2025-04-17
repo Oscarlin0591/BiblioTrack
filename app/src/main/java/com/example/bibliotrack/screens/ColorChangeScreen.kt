@@ -39,7 +39,7 @@ import com.example.bibliotrack.navigation.AppScreens
 @ExperimentalAnimationApi
 @Composable
 fun ColorChangeScreen(
-    //navController: NavController,
+    navController: NavController,
     //bookViewModel: BookViewModel
 ) {
     val isExpanded = remember { mutableStateOf(false) }
@@ -57,7 +57,7 @@ fun ColorChangeScreen(
 
 
     Scaffold(
-        /*topBar = {
+        topBar = {
             AppBar(
                 currentScreen = AppScreens.AboutScreen.name,
                 navController = navController,
@@ -67,7 +67,7 @@ fun ColorChangeScreen(
 //                bookViewModel = bookViewModel,
                 modifier = Modifier
             )
-        },*/
+        },
         //containerColor = bookViewModel.backgroundColor
 
     ) {
@@ -214,17 +214,8 @@ fun ColorChangeScreen(
 @Composable
 fun DropDownPreview() {
     MyApp {
-        ColorChangeScreen()
+        //ColorChangeScreen()
     }
 }
 
-@Composable
-fun DropDown() {
-    Column {
-        Row (){
-            Text("Demo")
-            Icon(Icons.Default.ArrowDropDown, contentDescription = null)
-        }
-    }
-}
 
