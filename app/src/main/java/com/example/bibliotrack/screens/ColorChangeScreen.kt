@@ -5,10 +5,14 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -17,8 +21,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.bibliotrack.MyApp
 import com.example.bibliotrack.model.BookViewModel
 import com.example.bibliotrack.navigation.AppBar
 import com.example.bibliotrack.navigation.AppScreens
@@ -30,6 +37,15 @@ fun ColorChangeScreen(
     navController: NavController,
     //bookViewModel: BookViewModel
 ) {
+    @Composable
+    fun DropDown() {
+        Column {
+            Row {
+                Text("Demo")
+                Icon(Icons.Default.ArrowDropDown, contentDescription = null)
+            }
+        }
+    }
     Scaffold(
         topBar = {
             AppBar(
@@ -52,10 +68,13 @@ fun ColorChangeScreen(
                 .padding(top = 100.dp)
                 .fillMaxWidth()
         ) {
-            Text("Change the background color by tapping a color:", style = MaterialTheme.typography.titleLarge)
-
+            Text(
+                "Change the background color by tapping a color:",
+                style = MaterialTheme.typography.titleLarge
+            )
+            DropDown()
             //white button
-            Card(onClick = {/*bookViewModel.updateColor(color = Color.White)*/},
+            /*Card(onClick = {/*bookViewModel.updateColor(color = Color.White)*/},
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(100.dp)
@@ -150,8 +169,33 @@ fun ColorChangeScreen(
                 }
                 Text(text = "Yellow", modifier = Modifier.align(Alignment.CenterHorizontally))
             }
+        }*/
+
+
         }
+
+
 
 
     }
 }
+
+@OptIn(ExperimentalAnimationApi::class)
+@Preview(showBackground = true)
+@Composable
+fun DropDownPreview() {
+    MyApp {
+        //ColorChangeScreen()
+    }
+}
+
+@Composable
+fun DropDown() {
+    Column {
+        Row {
+            Text("Demo")
+            Icon(Icons.Default.ArrowDropDown, contentDescription = null)
+        }
+    }
+}
+
