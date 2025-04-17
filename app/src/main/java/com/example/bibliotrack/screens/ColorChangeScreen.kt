@@ -3,6 +3,7 @@ package com.example.bibliotrack.screens
 import android.annotation.SuppressLint
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,11 +13,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.Card
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,20 +39,25 @@ import com.example.bibliotrack.navigation.AppScreens
 @ExperimentalAnimationApi
 @Composable
 fun ColorChangeScreen(
-    navController: NavController,
+    //navController: NavController,
     //bookViewModel: BookViewModel
 ) {
+    val isExpanded = remember { mutableStateOf(false) }
+    val colors = listOf("Light", "Dark", "Yellow", "Purple", "Green")
+    val itemPosition = remember { mutableStateOf(0) }
     @Composable
     fun DropDown() {
         Column {
-            Row {
-                Text("Demo")
+            Row (modifier = Modifier.clickable { isExpanded.value = true }){
+                Text(colors[itemPosition.value])
                 Icon(Icons.Default.ArrowDropDown, contentDescription = null)
             }
         }
     }
+
+
     Scaffold(
-        topBar = {
+        /*topBar = {
             AppBar(
                 currentScreen = AppScreens.AboutScreen.name,
                 navController = navController,
@@ -57,7 +67,7 @@ fun ColorChangeScreen(
 //                bookViewModel = bookViewModel,
                 modifier = Modifier
             )
-        },
+        },*/
         //containerColor = bookViewModel.backgroundColor
 
     ) {
@@ -72,7 +82,26 @@ fun ColorChangeScreen(
                 "Change the background color by tapping a color:",
                 style = MaterialTheme.typography.titleLarge
             )
-            DropDown()
+            Box {
+                DropDown()
+                DropdownMenu(
+                    expanded = isExpanded.value,
+                    onDismissRequest = { isExpanded.value = false }) {
+                    colors.forEachIndexed { index, color ->
+                        DropdownMenuItem(
+                            text = {
+                                Text(text = color)
+                            },
+                            onClick = {
+                                isExpanded.value = false
+                                itemPosition.value = index
+                            }
+                        )
+
+                    }
+                }
+            }
+
             //white button
             /*Card(onClick = {/*bookViewModel.updateColor(color = Color.White)*/},
                 modifier = Modifier
@@ -185,14 +214,14 @@ fun ColorChangeScreen(
 @Composable
 fun DropDownPreview() {
     MyApp {
-        //ColorChangeScreen()
+        ColorChangeScreen()
     }
 }
 
 @Composable
 fun DropDown() {
     Column {
-        Row {
+        Row (){
             Text("Demo")
             Icon(Icons.Default.ArrowDropDown, contentDescription = null)
         }
