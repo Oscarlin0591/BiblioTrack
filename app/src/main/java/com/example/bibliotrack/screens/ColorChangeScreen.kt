@@ -38,7 +38,7 @@ fun ColorChangeScreen(
                 navigateUp = { navController.navigateUp() },
                 textToShare = "",
                 context = LocalContext.current,
-                bookViewModel = bookViewModel,
+//                bookViewModel = bookViewModel,
                 modifier = Modifier
             )*/
         },

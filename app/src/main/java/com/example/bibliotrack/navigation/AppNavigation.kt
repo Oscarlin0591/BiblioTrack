@@ -26,6 +26,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.bibliotrack.model.BookViewModel
+import com.example.bibliotrack.screens.HomeScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,7 +36,7 @@ fun AppBar(
     navigateUp: () -> Unit,
     textToShare: String,
     context: Context,
-    bookViewModel: BookViewModel,
+//    bookViewModel: BookViewModel,
     modifier: Modifier
     ) {
     val backStackEntry by navController.currentBackStackEntryAsState()
@@ -95,7 +96,7 @@ fun AppBar(
 @Composable
 fun BookNavigation() {
     val navController = rememberNavController()
-    val bookViewModel: BookViewModel = viewModel()
+//    val bookViewModel: BookViewModel = viewModel()
 //    bookViewModel.getData()
 
     NavHost(
@@ -104,10 +105,10 @@ fun BookNavigation() {
         modifier = Modifier.fillMaxSize()
     ) {
         composable(AppScreens.HomeScreen.name) {
-//            HomeScreen(
-//                navController = navController,
+            HomeScreen(
+                navController = navController,
 //                bookViewModel
-//            )
+            )
         }
         composable(AppScreens.DetailScreen.name + "/{title}",
 //            arguments = listOf(navArgument(name = "title") { type = NavType.StringType})
