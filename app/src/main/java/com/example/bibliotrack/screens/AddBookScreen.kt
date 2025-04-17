@@ -25,12 +25,12 @@ import com.example.bibliotrack.navigation.AppScreens
 @ExperimentalAnimationApi
 @Composable
 fun AddBookScreen(
-    //navController: NavController,
+    navController: NavController,
     //bookViewModel: BookViewModel
 ){
     Scaffold(
         topBar = {
-            /*AppBar(
+            AppBar(
                 currentScreen = AppScreens.AboutScreen.name,
                 navController = navController,
                 navigateUp = { navController.navigateUp() },
@@ -38,7 +38,7 @@ fun AddBookScreen(
                 context = LocalContext.current,
 //                bookViewModel = bookViewModel,
                 modifier = Modifier
-            )*/
+            )
         },
         //containerColor = bookViewModel.backgroundColor
 
@@ -74,6 +74,6 @@ fun AddBookScreen(
 @Composable
 fun GreetingPreview() {
     MyApp {
-        AddBookScreen()
+        //AddBookScreen()
     }
 }

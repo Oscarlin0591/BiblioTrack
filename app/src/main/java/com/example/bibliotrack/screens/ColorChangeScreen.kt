@@ -27,12 +27,12 @@ import com.example.bibliotrack.navigation.AppScreens
 @ExperimentalAnimationApi
 @Composable
 fun ColorChangeScreen(
-    //navController: NavController,
+    navController: NavController,
     //bookViewModel: BookViewModel
 ) {
     Scaffold(
         topBar = {
-            /*AppBar(
+            AppBar(
                 currentScreen = AppScreens.AboutScreen.name,
                 navController = navController,
                 navigateUp = { navController.navigateUp() },
@@ -40,7 +40,7 @@ fun ColorChangeScreen(
                 context = LocalContext.current,
 //                bookViewModel = bookViewModel,
                 modifier = Modifier
-            )*/
+            )
         },
         //containerColor = bookViewModel.backgroundColor
 
