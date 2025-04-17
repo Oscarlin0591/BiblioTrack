@@ -27,8 +27,10 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.bibliotrack.model.BookViewModel
 import com.example.bibliotrack.screens.AboutScreen
+import com.example.bibliotrack.screens.AddBookScreen
 import com.example.bibliotrack.screens.BookListScreen
 import com.example.bibliotrack.screens.ColorChangeScreen
+import com.example.bibliotrack.screens.DetailsScreen
 import com.example.bibliotrack.screens.HomeScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -123,10 +125,11 @@ fun BookNavigation() {
         composable(AppScreens.DetailScreen.name + "/{title}",
 //            arguments = listOf(navArgument(name = "title") { type = NavType.StringType})
         ) { backStackEntry ->
-//            DetailsScreen(
-//                navController = navController, bookViewModel,
-//                backStackEntry.arguments?.getString("title"),
-//            )
+            DetailsScreen(
+                navController = navController,
+        //                bookViewModel,
+                backStackEntry.arguments?.getString("title"),
+            )
         }
         composable(AppScreens.AboutScreen.name) {
             AboutScreen(
@@ -138,6 +141,12 @@ fun BookNavigation() {
             ColorChangeScreen(
                 navController = navController,
 //                bookViewModel
+            )
+        }
+
+        composable(AppScreens.AddBookScreen.name) {
+            AddBookScreen(
+                navController = navController
             )
         }
     }

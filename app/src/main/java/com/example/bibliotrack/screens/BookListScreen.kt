@@ -16,9 +16,13 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -65,6 +69,18 @@ fun BookListScreen(
                 modifier = Modifier.windowInsetsBottomHeight(insets = WindowInsets(bottom=50.dp))
             ) {}
         },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                    navController.navigate(route= AppScreens.AddBookScreen.name)
+                }
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "Add Book"
+                )
+            }
+        }
 //        containerColor = bookViewModel.backgroundColor
     ) {
         Column(modifier = Modifier
