@@ -34,6 +34,7 @@ import com.example.bibliotrack.MyApp
 import com.example.bibliotrack.model.BookViewModel
 import com.example.bibliotrack.navigation.AppBar
 import com.example.bibliotrack.navigation.AppScreens
+import com.example.bibliotrack.navigation.PlainBar
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @ExperimentalAnimationApi
@@ -58,7 +59,7 @@ fun ColorChangeScreen(
 
     Scaffold(
         topBar = {
-            AppBar(
+            PlainBar(
                 currentScreen = AppScreens.AboutScreen.name,
                 navController = navController,
                 navigateUp = { navController.navigateUp() },
