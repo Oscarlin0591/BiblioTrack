@@ -20,6 +20,7 @@ import com.example.bibliotrack.MyApp
 import com.example.bibliotrack.model.BookViewModel
 import com.example.bibliotrack.navigation.AppBar
 import com.example.bibliotrack.navigation.AppScreens
+import com.example.bibliotrack.navigation.PlainBar
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @ExperimentalAnimationApi
@@ -30,7 +31,7 @@ fun AddBookScreen(
 ){
     Scaffold(
         topBar = {
-            AppBar(
+            PlainBar(
                 currentScreen = AppScreens.AboutScreen.name,
                 navController = navController,
                 navigateUp = { navController.navigateUp() },
@@ -43,7 +44,7 @@ fun AddBookScreen(
         //containerColor = bookViewModel.backgroundColor
 
     ) {
-        Column (horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()){
+        Column (horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth().padding(top = 100.dp)){
             Text("Title:")
             TextField("...", onValueChange = {})
 
