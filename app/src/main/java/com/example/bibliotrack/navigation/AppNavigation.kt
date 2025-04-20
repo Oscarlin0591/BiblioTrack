@@ -97,6 +97,38 @@ fun AppBar(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun PlainBar(
+    currentScreen: String,
+    navController: NavController,
+    navigateUp: () -> Unit,
+    textToShare: String,
+    context: Context,
+//    bookViewModel: BookViewModel,
+    modifier: Modifier
+) {
+    val backStackEntry by navController.currentBackStackEntryAsState()
+    val canNavigateBack = backStackEntry?.destination?.route != AppScreens.HomeScreen.name
+    TopAppBar(
+        title = { Text("BibioTrack") },
+        colors = TopAppBarDefaults.mediumTopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.secondary
+        ),
+        modifier = modifier,
+        navigationIcon = {
+            if (canNavigateBack) {
+                IconButton(onClick = navigateUp) {
+                    Icon(
+                        imageVector = Icons.Default.KeyboardArrowUp,
+                        contentDescription = ""
+                    )
+                }
+            }
+        },
+    )
+}
+
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun BookNavigation() {
