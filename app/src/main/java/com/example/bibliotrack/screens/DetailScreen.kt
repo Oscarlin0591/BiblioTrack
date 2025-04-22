@@ -30,8 +30,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
+import com.example.bibliotrack.R
 import com.example.bibliotrack.navigation.AppBar
 import com.example.bibliotrack.navigation.AppScreens
+import com.example.bibliotrack.navigation.NavigationDestination
+
+object DetailDestination : NavigationDestination {
+    override val route = "DetailScreen"
+    override val titleRes = R.string.detail_screen
+    const val itemIdArg = "itemId"
+    val routeWithArgs = "$route/{$itemIdArg}"
+}
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @ExperimentalAnimationApi

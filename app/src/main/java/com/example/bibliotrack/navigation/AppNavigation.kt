@@ -3,6 +3,7 @@ package com.example.bibliotrack.navigation
 import android.content.Context
 import android.content.Intent
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
@@ -32,6 +33,7 @@ import com.example.bibliotrack.screens.BookListScreen
 import com.example.bibliotrack.screens.ColorChangeScreen
 import com.example.bibliotrack.screens.DetailsScreen
 import com.example.bibliotrack.screens.HomeScreen
+import com.example.bibliotrack.ui.theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -47,9 +49,9 @@ fun AppBar(
     val backStackEntry by navController.currentBackStackEntryAsState()
     val canNavigateBack = backStackEntry?.destination?.route != AppScreens.HomeScreen.name
     TopAppBar(
-        title = { Text("BibioTrack") },
+        title = { Text("BibioTrack", style = MaterialTheme.typography.titleLarge) },
         colors = TopAppBarDefaults.mediumTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.secondary
+            containerColor = MaterialTheme.colorScheme.primary
         ),
         modifier = modifier,
         navigationIcon = {
