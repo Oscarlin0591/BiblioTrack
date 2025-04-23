@@ -26,6 +26,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.bibliotrack.data.BookDatabase
+import com.example.bibliotrack.data.BooksRepository
+import com.example.bibliotrack.data.OfflineBooksRepository
+import com.example.bibliotrack.model.BookEntryViewModel
 import com.example.bibliotrack.model.BookViewModel
 import com.example.bibliotrack.screens.AboutScreen
 import com.example.bibliotrack.screens.AddBookScreen
@@ -134,8 +138,10 @@ fun PlainBar(
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun BookNavigation() {
+//    val bookDatabase = BookDatabase = BookDatabase
+//    val offlineBooksRepository: OfflineBooksRepository = OfflineBooksRepository()
     val navController = rememberNavController()
-//    val bookViewModel: BookViewModel = viewModel()
+    val bookEntryViewModel: BookEntryViewModel = viewModel()
 //    bookViewModel.getData()
 
     NavHost(
@@ -180,7 +186,8 @@ fun BookNavigation() {
 
         composable(AppScreens.AddBookScreen.name) {
             AddBookScreen(
-                navController = navController
+                navController = navController,
+                bookEntryViewModel = bookEntryViewModel
             )
         }
     }
