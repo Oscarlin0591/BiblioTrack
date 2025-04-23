@@ -38,6 +38,7 @@ import androidx.navigation.NavController
 import com.example.bibliotrack.data.Book
 import com.example.bibliotrack.navigation.AppBar
 import com.example.bibliotrack.navigation.AppScreens
+import java.util.Date
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -47,8 +48,8 @@ fun BookListScreen(
 //    bookViewModel: BookViewModel
 ) {
     val bookList = listOf(
-        Book(id=1, title="Title 1", author ="Author 1", finished = false),
-        Book(id=2, title="Title 2", author ="Author 1", finished = false)
+        Book(id=1, title="Title 1", author ="Author 1", chapters = 1, chaptersRead = 3, pagesRead = 3, pages = 30, rating = 2.0, createdAt = Date(), finished = false),
+        Book(id=2, title="Title 2", author ="Author 1", chapters = 1, chaptersRead = 3, pagesRead = 3, pages = 30, rating = 2.0, createdAt = Date(), finished = false),
     )
     Scaffold(
         topBar = { //top app bar

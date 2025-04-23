@@ -10,25 +10,33 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.bibliotrack.MyApp
+import com.example.bibliotrack.model.BookDetails
+import com.example.bibliotrack.model.BookEntryViewModel
+import com.example.bibliotrack.model.BookUiState
 import com.example.bibliotrack.model.BookViewModel
 import com.example.bibliotrack.navigation.AppBar
 import com.example.bibliotrack.navigation.AppScreens
 import com.example.bibliotrack.navigation.PlainBar
+import kotlinx.coroutines.launch
+import java.util.Date
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @ExperimentalAnimationApi
 @Composable
 fun AddBookScreen(
     navController: NavController,
-    //bookViewModel: BookViewModel
+    bookEntryViewModel: BookEntryViewModel
 ){
+    val coroutineScope = rememberCoroutineScope()
     Scaffold(
         topBar = {
             PlainBar(
@@ -44,28 +52,85 @@ fun AddBookScreen(
         //containerColor = bookViewModel.backgroundColor
 
     ) {
-        Column (horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth().padding(top = 100.dp)){
-            Text("Title:")
-            TextField("...", onValueChange = {})
-
-            Text("Author:")
-            TextField("...", onValueChange = {})
-
-            Text("Total chapters:")
-            TextField("...", onValueChange = {})
-
-            Text("Chapters read:")
-            TextField("...", onValueChange = {})
-
-            Text("Total pages:")
-            TextField("...", onValueChange = {})
-
-            Text("Pages read:")
-            TextField("...", onValueChange = {})
-
-            Button(onClick = {}, modifier = Modifier.align(Alignment.End).padding(20.dp)) {
-                Text("Save")
+        BookEntryBody(
+            bookUiState = bookEntryViewModel.bookUiState,
+            onBookValueChange = bookEntryViewModel::updateUiState,
+            onSaveClick = {
+                coroutineScope.launch {
+                    bookEntryViewModel.saveBook()
+                }
             }
+        )
+    }
+}
+
+@Composable
+fun BookForm(
+    bookDetails: BookDetails,
+    onValueChange: (BookDetails) -> Unit = {},
+    modifier: Modifier
+){
+
+    Column (horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth().padding(top = 100.dp)){
+        Text("Title:")
+        TextField(
+            value = bookDetails.title,
+            onValueChange = {onValueChange(bookDetails.copy(title = it))},
+        )
+
+        Text("Author:")
+        TextField(
+            value = bookDetails.author,
+            onValueChange = {onValueChange(bookDetails.copy(author = it))},
+        )
+
+        Text("Total chapters:")
+        TextField(
+            value = bookDetails.chapters,
+            onValueChange = {onValueChange(bookDetails.copy(chapters = it))},
+        )
+
+        Text("Chapters read:")
+        TextField(
+            value = bookDetails.chaptersRead,
+            onValueChange = {onValueChange(bookDetails.copy(chaptersRead = it))},
+        )
+
+        Text("Total pages:")
+        TextField(
+            value = bookDetails.pages,
+            onValueChange = {onValueChange(bookDetails.copy(pages = it))},
+        )
+
+        Text("Pages read:")
+        TextField(
+            value = bookDetails.pagesRead,
+            onValueChange = {onValueChange(bookDetails.copy(pagesRead = it))},
+        )
+
+        Button(onClick = {}, modifier = Modifier.align(Alignment.End).padding(20.dp)) {
+            Text("Save")
+        }
+    }
+}
+
+@Composable
+fun BookEntryBody(
+    bookUiState: BookUiState,
+    onBookValueChange: (BookDetails) -> Unit,
+    onSaveClick: () -> Unit,
+    modifier: Modifier = Modifier
+){
+    Column() {
+        BookForm(
+            bookDetails = bookUiState.bookDetails,
+            onValueChange = onBookValueChange,
+            modifier = Modifier.fillMaxWidth()
+        )
+        Button(
+            onClick = onSaveClick
+        ) {
+            Text("Save")
         }
     }
 }
@@ -75,6 +140,10 @@ fun AddBookScreen(
 @Composable
 fun GreetingPreview() {
     MyApp {
-//        AddBookScreen()
+        BookEntryBody(bookUiState = BookUiState(
+            BookDetails(
+                title = "something", author = "man", chapters = "4", chaptersRead = "3", pagesRead = "4", pages = "9", id = 1, finished = "true", rating = "1", createdAt = Date()
+            )
+        ), onBookValueChange = {}, onSaveClick = {})
     }
 }

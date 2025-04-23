@@ -8,7 +8,7 @@ import com.example.bibliotrack.data.Book
 import com.example.bibliotrack.data.BooksRepository
 import java.util.Date
 
-class BookEntryViewModel(private val booksRepository: BooksRepository) : ViewModel() {
+class BookEntryViewModel(/*private val booksRepository: BooksRepository*/) : ViewModel() {
     var bookUiState by mutableStateOf(BookUiState())
         private set
 
@@ -25,7 +25,7 @@ class BookEntryViewModel(private val booksRepository: BooksRepository) : ViewMod
 
     suspend fun saveBook() {
         if (validateInput()) {
-            booksRepository.insertBook((bookUiState.bookDetails.toBook()))
+            //booksRepository.insertBook((bookUiState.bookDetails.toBook()))
         }
     }
 
