@@ -20,6 +20,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardColors
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -48,8 +49,8 @@ fun BookListScreen(
 //    bookViewModel: BookViewModel
 ) {
     val bookList = listOf(
-        Book(id=1, title="Title 1", author ="Author 1", chapters = 1, chaptersRead = 3, pagesRead = 3, pages = 30, rating = 2.0, createdAt = Date(), finished = false),
-        Book(id=2, title="Title 2", author ="Author 1", chapters = 1, chaptersRead = 3, pagesRead = 3, pages = 30, rating = 2.0, createdAt = Date(), finished = false),
+        Book(id = 1, title = "Title 1", author = "Author 1", finished = false, chapters = 10, chaptersRead = 1, pages = 100, pagesRead = 20, rating = 5.0, createdAt = Date()),
+        Book(id=2, title="Title 2", author ="Author 1", finished = false, chapters = 10, chaptersRead = 1, pages = 100, pagesRead = 20, rating = 5.0, createdAt = Date())
     )
     Scaffold(
         topBar = { //top app bar
@@ -72,6 +73,7 @@ fun BookListScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
                 onClick = {
                     navController.navigate(route= AppScreens.AddBookScreen.name)
                 }
@@ -109,6 +111,11 @@ fun BookCard(
     //This composable contains the cards for each game
 
     Card(
+        colors = CardColors(
+            MaterialTheme.colorScheme.primaryContainer, MaterialTheme.colorScheme.onSurface,
+            disabledContainerColor = MaterialTheme.colorScheme.onErrorContainer,
+            disabledContentColor = MaterialTheme.colorScheme.onError
+        ),
         modifier = Modifier
             .padding(4.dp)
             .fillMaxSize(.5f)

@@ -7,4 +7,12 @@
         <item>Purple</item>
         <item>Yellow</item>
     </string-array>
+    <string name="home_screen">Home Screen</string>
+    <string name="book_list_screen">Book List Screen</string>
+    <string name="detail_screen">Detail Screen</string>
+    <string name="about_screen">About Screen</string>
+    <string name="setting_screen">Setting Screen</string>
+    <string name="add_book_screen">Add Book Screen</string>
+
+
 </resources>

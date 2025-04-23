@@ -1,6 +1,7 @@
 package com.example.bibliotrack.screens
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
@@ -21,9 +22,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.bibliotrack.R
 import com.example.bibliotrack.model.BookViewModel
 import com.example.bibliotrack.navigation.AppBar
 import com.example.bibliotrack.navigation.AppScreens
+import com.example.bibliotrack.navigation.NavigationDestination
+
+object HomeDestination : NavigationDestination {
+    override val route = "HomeScreen"
+    override val titleRes = R.string.home_screen
+    const val itemIdArg = "itemId"
+    val routeWithArgs = "$route/{$itemIdArg}"
+}
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -33,6 +43,7 @@ fun HomeScreen(
 //    bookViewModel: BookViewModel
 ) {
     Scaffold(
+        containerColor = MaterialTheme.colorScheme.primaryContainer,
         topBar = {
             AppBar(
                 currentScreen = AppScreens.HomeScreen.name,
