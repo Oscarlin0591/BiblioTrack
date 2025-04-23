@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -57,6 +58,8 @@ dependencies {
     implementation(libs.androidx.navigation.runtime.android)
     implementation(libs.androidx.navigation.runtime.android)
     implementation(libs.androidx.ui.text.google.fonts)
+    implementation(libs.com.google.devtools.ksp.gradle.plugin)
+    ksp("androidx.room:room-compiler:2.7.0-rc03")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

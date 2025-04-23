@@ -37,6 +37,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.bibliotrack.data.Book
+import com.example.bibliotrack.model.BookEntryViewModel
 import com.example.bibliotrack.navigation.AppBar
 import com.example.bibliotrack.navigation.AppScreens
 import java.util.Date
@@ -46,11 +47,11 @@ import java.util.Date
 @Composable
 fun BookListScreen(
     navController: NavController,
-//    bookViewModel: BookViewModel
+    bookEntryViewModel: BookEntryViewModel
 ) {
     val bookList = listOf(
-        Book(id = 1, title = "Title 1", author = "Author 1", finished = false, chapters = 10, chaptersRead = 1, pages = 100, pagesRead = 20, rating = 5.0, createdAt = Date()),
-        Book(id=2, title="Title 2", author ="Author 1", finished = false, chapters = 10, chaptersRead = 1, pages = 100, pagesRead = 20, rating = 5.0, createdAt = Date())
+        Book(id = 1, title = "Title 1", author = "Author 1", finished = false, chapters = 10, chaptersRead = 1, pages = 100, pagesRead = 20, rating = 5.0, createdAt = Date().toString()),
+        Book(id=2, title="Title 2", author ="Author 1", finished = false, chapters = 10, chaptersRead = 1, pages = 100, pagesRead = 20, rating = 5.0, createdAt = Date().toString())
     )
     Scaffold(
         topBar = { //top app bar
@@ -60,7 +61,7 @@ fun BookListScreen(
                 navigateUp = { navController.navigateUp() },
                 context = LocalContext.current,
                 textToShare = "",
-//                bookViewModel = bookViewModel,
+                bookEntryViewModel = bookEntryViewModel,
                 modifier = Modifier
             )
         },
@@ -113,8 +114,8 @@ fun BookCard(
     Card(
         colors = CardColors(
             MaterialTheme.colorScheme.primaryContainer, MaterialTheme.colorScheme.onSurface,
-            disabledContainerColor = MaterialTheme.colorScheme.onErrorContainer,
-            disabledContentColor = MaterialTheme.colorScheme.onError
+            disabledContainerColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            disabledContentColor = MaterialTheme.colorScheme.onSurfaceVariant
         ),
         modifier = Modifier
             .padding(4.dp)

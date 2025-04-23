@@ -26,6 +26,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.bibliotrack.AppViewModelProvider
 import com.example.bibliotrack.data.BookDatabase
 import com.example.bibliotrack.data.BooksRepository
 import com.example.bibliotrack.data.OfflineBooksRepository
@@ -47,7 +48,7 @@ fun AppBar(
     navigateUp: () -> Unit,
     textToShare: String,
     context: Context,
-//    bookViewModel: BookViewModel,
+    bookEntryViewModel: BookEntryViewModel = viewModel(factory = AppViewModelProvider.Factory),
     modifier: Modifier
     ) {
     val backStackEntry by navController.currentBackStackEntryAsState()
@@ -138,10 +139,10 @@ fun PlainBar(
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun BookNavigation() {
-//    val bookDatabase = BookDatabase = BookDatabase
-//    val offlineBooksRepository: OfflineBooksRepository = OfflineBooksRepository()
+//    val bookDatabase: BookDatabase,
+//    val offlineBooksRepository: OfflineBooksRepository = OfflineBooksRepository(),
     val navController = rememberNavController()
-    val bookEntryViewModel: BookEntryViewModel = viewModel()
+    val bookEntryViewModel: BookEntryViewModel = viewModel(factory = AppViewModelProvider.Factory)
 //    bookViewModel.getData()
 
     NavHost(
@@ -152,13 +153,14 @@ fun BookNavigation() {
         composable(AppScreens.HomeScreen.name) {
             HomeScreen(
                 navController = navController,
-//                bookViewModel
+                bookEntryViewModel = bookEntryViewModel
             )
         }
 
         composable(AppScreens.BookListScreen.name) {
             BookListScreen(
-                navController = navController
+                navController = navController,
+                bookEntryViewModel = bookEntryViewModel
             )
         }
 
@@ -167,20 +169,20 @@ fun BookNavigation() {
         ) { backStackEntry ->
             DetailsScreen(
                 navController = navController,
-        //                bookViewModel,
+                bookEntryViewModel = bookEntryViewModel,
                 backStackEntry.arguments?.getString("title"),
             )
         }
         composable(AppScreens.AboutScreen.name) {
             AboutScreen(
                 navController = navController,
-//                bookViewModel
+                bookEntryViewModel = bookEntryViewModel
             )
         }
         composable(AppScreens.ColorChangeScreen.name) {
             ColorChangeScreen(
                 navController = navController,
-//                bookViewModel
+                bookEntryViewModel = bookEntryViewModel
             )
         }
 

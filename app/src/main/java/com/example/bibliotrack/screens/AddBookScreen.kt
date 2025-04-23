@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -34,7 +35,7 @@ import java.util.Date
 @Composable
 fun AddBookScreen(
     navController: NavController,
-    bookEntryViewModel: BookEntryViewModel
+    bookEntryViewModel: BookEntryViewModel = viewModel()
 ){
     val coroutineScope = rememberCoroutineScope()
     Scaffold(
@@ -45,7 +46,6 @@ fun AddBookScreen(
                 navigateUp = { navController.navigateUp() },
                 textToShare = "",
                 context = LocalContext.current,
-//                bookViewModel = bookViewModel,
                 modifier = Modifier
             )
         },
@@ -58,6 +58,7 @@ fun AddBookScreen(
             onSaveClick = {
                 coroutineScope.launch {
                     bookEntryViewModel.saveBook()
+                    navController.navigateUp()
                 }
             }
         )
@@ -108,9 +109,15 @@ fun BookForm(
             onValueChange = {onValueChange(bookDetails.copy(pagesRead = it))},
         )
 
-        Button(onClick = {}, modifier = Modifier.align(Alignment.End).padding(20.dp)) {
-            Text("Save")
-        }
+        Text("Rating:")
+        TextField(
+            value = bookDetails.rating,
+            onValueChange = {onValueChange(bookDetails.copy(rating = it))},
+        )
+
+//        Button(onClick = {}, modifier = Modifier.align(Alignment.End).padding(20.dp)) {
+//            Text("Save")
+//        }
     }
 }
 
@@ -128,7 +135,9 @@ fun BookEntryBody(
             modifier = Modifier.fillMaxWidth()
         )
         Button(
-            onClick = onSaveClick
+            onClick = onSaveClick,
+            enabled = bookUiState.isEntryValid,
+            shape = MaterialTheme.shapes.small,
         ) {
             Text("Save")
         }
@@ -142,7 +151,7 @@ fun GreetingPreview() {
     MyApp {
         BookEntryBody(bookUiState = BookUiState(
             BookDetails(
-                title = "something", author = "man", chapters = "4", chaptersRead = "3", pagesRead = "4", pages = "9", id = 1, finished = "true", rating = "1", createdAt = Date()
+                title = "something", author = "man", chapters = "4", chaptersRead = "3", pagesRead = "4", pages = "9", id = 1, finished = "true", rating = "1", createdAt = "12-21-2024"
             )
         ), onBookValueChange = {}, onSaveClick = {})
     }

@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.bibliotrack.MyApp
 import com.example.bibliotrack.R
+import com.example.bibliotrack.model.BookEntryViewModel
 import com.example.bibliotrack.model.BookViewModel
 import com.example.bibliotrack.navigation.AppBar
 import com.example.bibliotrack.navigation.AppScreens
@@ -56,7 +57,7 @@ import com.example.bibliotrack.navigation.PlainBar
 fun ColorChangeScreen(
 //    navigateToHomeScreen: (Int) -> Unit,
     navController: NavController,
-    //bookViewModel: BookViewModel
+    bookEntryViewModel: BookEntryViewModel
 ) {
     val isExpanded = remember { mutableStateOf(false) }
     val colors = listOf("Light", "Dark", "Yellow", "Purple", "Green")
@@ -80,14 +81,8 @@ fun ColorChangeScreen(
                 navigateUp = { navController.navigateUp() },
                 textToShare = "",
                 context = LocalContext.current,
-//                bookViewModel = bookViewModel,
                 modifier = Modifier
             )
-//            TopAppBar(
-//                title = { stringResource(SettingDestination.titleRes) },
-//                canNavigateBack = true,
-//                navigateUp = navigateBack
-//            )
         },
         //containerColor = bookViewModel.backgroundColor
 

@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import com.example.bibliotrack.R
+import com.example.bibliotrack.model.BookEntryViewModel
 import com.example.bibliotrack.navigation.AppBar
 import com.example.bibliotrack.navigation.AppScreens
 import com.example.bibliotrack.navigation.NavigationDestination
@@ -47,7 +48,7 @@ object DetailDestination : NavigationDestination {
 @Composable
 fun DetailsScreen(
     navController: NavController,
-//    bookViewModel: BookViewModel,
+    bookEntryViewModel: BookEntryViewModel,
     bookTitle: String?
 ) {
     Scaffold(
@@ -58,7 +59,7 @@ fun DetailsScreen(
                 navigateUp = { navController.navigateUp() },
                 context = LocalContext.current,
                 textToShare = "Share Text",
-//                bookViewModel = bookViewModel,
+                bookEntryViewModel = bookEntryViewModel,
                 modifier = Modifier
             )
 

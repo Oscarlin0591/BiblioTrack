@@ -16,5 +16,5 @@ data class Book (
     val pagesRead: Int,
     val finished: Boolean,
     val rating: Double,
-    val createdAt: Date
+    val createdAt: String
 )
