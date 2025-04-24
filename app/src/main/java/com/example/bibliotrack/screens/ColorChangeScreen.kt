@@ -60,13 +60,13 @@ fun ColorChangeScreen(
     bookEntryViewModel: BookEntryViewModel
 ) {
     val isExpanded = remember { mutableStateOf(false) }
-    val colors = listOf("Light", "Dark", "Yellow", "Purple", "Green")
-    val itemPosition = remember { mutableStateOf(0) }
+    val colors = listOf("Default","Light", "Dark", "Yellow", "Purple", "Green")
+    val defaultColor = MaterialTheme.colorScheme.primaryContainer
     @Composable
     fun DropDown() {
         Column {
             Row (modifier = Modifier.clickable { isExpanded.value = true }){
-                Text(colors[itemPosition.value])
+                Text(colors[bookEntryViewModel.dropDownPosition])
                 Icon(Icons.Default.ArrowDropDown, contentDescription = null)
             }
         }
@@ -84,7 +84,7 @@ fun ColorChangeScreen(
                 modifier = Modifier
             )
         },
-        //containerColor = bookViewModel.backgroundColor
+        containerColor = bookEntryViewModel.backgroundColor
 
     ) {
 
@@ -110,7 +110,28 @@ fun ColorChangeScreen(
                             },
                             onClick = {
                                 isExpanded.value = false
-                                itemPosition.value = index
+
+                                when(color){
+                                    "Default" -> {
+                                        bookEntryViewModel.changeColor(defaultColor)
+                                    }
+                                    "Light" -> {
+                                        bookEntryViewModel.changeColor(Color.White)
+                                    }
+                                    "Dark" -> {
+                                        bookEntryViewModel.changeColor(Color.Black)
+                                    }
+                                    "Yellow" -> {
+                                        bookEntryViewModel.changeColor(Color.Yellow)
+                                    }
+                                    "Purple" -> {
+                                        bookEntryViewModel.changeColor(Color.Magenta)
+                                    }
+                                    "Green" -> {
+                                        bookEntryViewModel.changeColor(Color.Green)
+                                    }
+                                }
+                                bookEntryViewModel.dropDownPosition = index
                             }
                         )
 

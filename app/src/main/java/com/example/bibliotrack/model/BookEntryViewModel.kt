@@ -3,6 +3,7 @@ package com.example.bibliotrack.model
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,7 +19,8 @@ import java.util.Date
 
 class BookEntryViewModel(private val booksRepository: BooksRepository) : ViewModel() {
     //val allBooksStream: Flow<List<Book>> = booksRepository.getAllBooksStream()
-
+    var backgroundColor: Color by mutableStateOf(Color.White)
+    var dropDownPosition by mutableStateOf(0)
 
     var bookUiState by mutableStateOf(BookUiState())
         private set
@@ -46,6 +48,10 @@ class BookEntryViewModel(private val booksRepository: BooksRepository) : ViewMod
             list = booksRepository.getAllBooksStream().asLiveData()
         }
         return list
+    }
+
+    fun changeColor(color: Color){
+        this.backgroundColor = color
     }
 }
 

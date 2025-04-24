@@ -52,7 +52,7 @@ fun AboutScreen(
                 modifier = Modifier.windowInsetsBottomHeight(insets = WindowInsets(bottom = 50.dp))
             ) {}
         },
-//        containerColor = bookViewModel.backgroundColor
+        containerColor = bookEntryViewModel.backgroundColor
     ) {
         Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
             Text(

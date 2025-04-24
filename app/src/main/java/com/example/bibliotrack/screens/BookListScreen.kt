@@ -96,8 +96,8 @@ fun BookListScreen(
                     contentDescription = "Add Book"
                 )
             }
-        }
-//        containerColor = bookViewModel.backgroundColor
+        },
+        containerColor = bookEntryViewModel.backgroundColor
     ) {
 
         Column(modifier = Modifier

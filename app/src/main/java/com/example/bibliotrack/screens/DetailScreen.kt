@@ -71,7 +71,7 @@ fun DetailsScreen(
                 modifier = Modifier.windowInsetsBottomHeight(insets = WindowInsets(bottom = 50.dp))
             ) {}
         },
-//        containerColor = bookViewModel.backgroundColor
+        containerColor = bookEntryViewModel.backgroundColor
     ) {
 
         Column(
