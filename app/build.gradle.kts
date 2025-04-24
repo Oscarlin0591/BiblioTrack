@@ -59,6 +59,8 @@ dependencies {
     implementation(libs.androidx.navigation.runtime.android)
     implementation(libs.androidx.ui.text.google.fonts)
     implementation(libs.com.google.devtools.ksp.gradle.plugin)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
     ksp("androidx.room:room-compiler:2.7.0-rc03")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

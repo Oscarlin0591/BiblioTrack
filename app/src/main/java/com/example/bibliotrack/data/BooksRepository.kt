@@ -7,6 +7,8 @@ interface BooksRepository {
 
     fun getBookStream(id: Int): Flow<Book?>
 
+    fun getAllList(): List<Book>
+
     suspend fun insertBook(book: Book)
 
     suspend fun deleteBook(book: Book)

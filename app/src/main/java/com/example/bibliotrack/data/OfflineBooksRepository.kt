@@ -9,6 +9,9 @@ class OfflineBooksRepository(private val bookDao: BookDao) : BooksRepository {
     override fun getBookStream(id: Int): Flow<Book?> =
         bookDao.getBook(id)
 
+    override fun getAllList(): List<Book> =
+        bookDao.getAllList()
+
     override suspend fun insertBook(book: Book) =
         bookDao.insert(book)
 
