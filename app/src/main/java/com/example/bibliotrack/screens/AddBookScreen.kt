@@ -49,7 +49,7 @@ fun AddBookScreen(
                 modifier = Modifier
             )
         },
-        //containerColor = bookViewModel.backgroundColor
+        containerColor = bookEntryViewModel.backgroundColor
 
     ) {
         BookEntryBody(
