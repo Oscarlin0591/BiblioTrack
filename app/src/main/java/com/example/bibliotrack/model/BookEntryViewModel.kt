@@ -3,12 +3,23 @@ package com.example.bibliotrack.model
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.bibliotrack.data.Book
 import com.example.bibliotrack.data.BooksRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.launch
 import java.util.Date
 
 class BookEntryViewModel(private val booksRepository: BooksRepository) : ViewModel() {
+    //val allBooksStream: Flow<List<Book>> = booksRepository.getAllBooksStream()
+
+
     var bookUiState by mutableStateOf(BookUiState())
         private set
 
@@ -29,6 +40,13 @@ class BookEntryViewModel(private val booksRepository: BooksRepository) : ViewMod
         }
     }
 
+    fun getAllBooks(): LiveData<List<Book>>{
+        var list: LiveData<List<Book>> = MutableLiveData<List<Book>>()
+        viewModelScope.launch(Dispatchers.IO) {
+            list = booksRepository.getAllBooksStream().asLiveData()
+        }
+        return list
+    }
 }
 
 data class BookUiState(
