@@ -115,9 +115,6 @@ fun BookForm(
             onValueChange = {onValueChange(bookDetails.copy(rating = it))},
         )
 
-//        Button(onClick = {}, modifier = Modifier.align(Alignment.End).padding(20.dp)) {
-//            Text("Save")
-//        }
     }
 }
 

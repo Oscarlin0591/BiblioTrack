@@ -1,6 +1,7 @@
 package com.example.bibliotrack.screens
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -33,6 +34,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -61,7 +63,7 @@ fun BookListScreen(
     navController: NavController,
     bookEntryViewModel: BookEntryViewModel
 ) {
-    val allBooks = bookEntryViewModel.getAllBooks().value
+    val bookListUiState by bookEntryViewModel.bookListUiState.collectAsState()
 //        Book(id = 1, title = "Title 1", author = "Author 1", finished = false, chapters = 10, chaptersRead = 1, pages = 100, pagesRead = 20, rating = 5.0, createdAt = Date().toString()),
 //        Book(id=2, title="Title 2", author ="Author 1", finished = false, chapters = 10, chaptersRead = 1, pages = 100, pagesRead = 20, rating = 5.0, createdAt = Date().toString())
 
@@ -102,22 +104,21 @@ fun BookListScreen(
 
         Column(modifier = Modifier
             .fillMaxSize()
-            .padding(vertical = 36.dp), verticalArrangement = Arrangement.Center) {
-            if (allBooks != null) {
-                if(allBooks.isNotEmpty()){
-                    LazyVerticalGrid(
-                        //lazy column for all the books
-                        columns = GridCells.Fixed(1),
-                    ) {
-                        items(allBooks){
-                            BookCard(book = it) {book ->
-                                navController.navigate(route = AppScreens.DetailScreen.name + "/$book")
-                            }
+            .padding(vertical = 90.dp), verticalArrangement = Arrangement.Top) {
+
+            if(bookListUiState.itemList.isNotEmpty()){
+                LazyVerticalGrid(
+                    //lazy column for all the books
+                    columns = GridCells.Fixed(1)
+                ) {
+                    items(items = bookListUiState.itemList, key = {it.id}){ book ->
+                        BookCard(book = book) {
+                            navController.navigate(route = AppScreens.DetailScreen.name + "/$book")
                         }
                     }
-                }else{
-                    Text("Tab the + button to add a bookmark")
                 }
+            }else{
+                Text("Tab the + button to add a bookmark")
             }
 
         }
@@ -142,7 +143,7 @@ fun BookCard(
         modifier = Modifier
             .padding(4.dp)
             .fillMaxSize(.5f)
-            .height(250.dp)
+            .height(100.dp)
             .clickable {
 //                add itemclick
                 itemClick(book.title)
