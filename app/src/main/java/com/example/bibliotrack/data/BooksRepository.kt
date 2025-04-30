@@ -9,9 +9,12 @@ interface BooksRepository {
 
     fun getAllList(): List<Book>
 
+    fun getQueryStream(query: String): Flow<List<Book>>
+
     suspend fun insertBook(book: Book)
 
     suspend fun deleteBook(book: Book)
 
     suspend fun updateBook(book: Book)
+
 }

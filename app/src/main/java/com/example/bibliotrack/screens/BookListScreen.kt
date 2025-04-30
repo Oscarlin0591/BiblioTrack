@@ -1,12 +1,14 @@
 package com.example.bibliotrack.screens
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,16 +24,21 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -42,10 +49,12 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.bibliotrack.AppViewModelProvider
+import com.example.bibliotrack.R
 import com.example.bibliotrack.data.Book
 import com.example.bibliotrack.model.BookEntryViewModel
 import com.example.bibliotrack.model.ListViewModel
@@ -66,7 +75,7 @@ fun BookListScreen(
     val bookListUiState by bookEntryViewModel.bookListUiState.collectAsState()
 //        Book(id = 1, title = "Title 1", author = "Author 1", finished = false, chapters = 10, chaptersRead = 1, pages = 100, pagesRead = 20, rating = 5.0, createdAt = Date().toString()),
 //        Book(id=2, title="Title 2", author ="Author 1", finished = false, chapters = 10, chaptersRead = 1, pages = 100, pagesRead = 20, rating = 5.0, createdAt = Date().toString())
-
+    val coroutineScope = rememberCoroutineScope()
     Scaffold(
         topBar = { //top app bar
             AppBar(
@@ -101,11 +110,17 @@ fun BookListScreen(
         },
         containerColor = bookEntryViewModel.backgroundColor
     ) {
-
         Column(modifier = Modifier
             .fillMaxSize()
             .padding(vertical = 90.dp), verticalArrangement = Arrangement.Top) {
-
+            TextField(
+                onValueChange = {
+                    bookEntryViewModel.query = it
+                    coroutineScope.launch {
+                        bookEntryViewModel.updateListUiState(bookEntryViewModel.query)
+                    }
+                },
+                value = bookEntryViewModel.query)
             if(bookListUiState.itemList.isNotEmpty()){
                 LazyVerticalGrid(
                     //lazy column for all the books
@@ -125,6 +140,14 @@ fun BookListScreen(
     }
 
 
+}
+
+@Composable
+fun Search(bookEntryViewModel: BookEntryViewModel){
+
+    Row (modifier = Modifier.fillMaxWidth()){
+
+    }
 }
 
 @Composable
