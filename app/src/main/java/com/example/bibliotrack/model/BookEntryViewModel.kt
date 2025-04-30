@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.room.Query
 import com.example.bibliotrack.data.Book
 import com.example.bibliotrack.data.BooksRepository
 import kotlinx.coroutines.flow.SharingStarted
@@ -16,12 +17,13 @@ import kotlinx.coroutines.flow.stateIn
 class BookEntryViewModel(private val booksRepository: BooksRepository) : ViewModel() {
     var backgroundColor: Color by mutableStateOf(Color.White)
     var dropDownPosition by mutableStateOf(0)
+    var query: String by mutableStateOf("")
 
     companion object {
         private const val TIMEOUT_MILLIS = 5_000L
     }
 
-    val bookListUiState: StateFlow<BookListUiState> =
+    var bookListUiState: StateFlow<BookListUiState> =
         booksRepository.getAllBooksStream().map { BookListUiState(it) }
             .stateIn(
                 scope = viewModelScope,
@@ -31,6 +33,15 @@ class BookEntryViewModel(private val booksRepository: BooksRepository) : ViewMod
 
     var bookUiState by mutableStateOf(BookUiState())
         private set
+
+    fun updateListUiState(query: String){
+        bookListUiState = booksRepository.getQueryStream(query).map { BookListUiState(it) }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
+                initialValue = BookListUiState()
+            )
+    }
 
     fun updateUiState(bookDetails: BookDetails) {
         bookUiState =

@@ -37,7 +37,7 @@ fun HomeScreen(
     bookEntryViewModel: BookEntryViewModel
 ) {
     Scaffold(
-        containerColor = MaterialTheme.colorScheme.primaryContainer,
+        //containerColor = MaterialTheme.colorScheme.primaryContainer,
         topBar = {
             AppBar(
                 currentScreen = AppScreens.HomeScreen.name,
@@ -56,16 +56,16 @@ fun HomeScreen(
                 modifier = Modifier.windowInsetsBottomHeight(insets = WindowInsets(bottom=50.dp))
             ) {}
         },
-//        contentColor = bookViewModel.backgroundColor
+        containerColor = bookEntryViewModel.backgroundColor
     ) {
 
         Column (modifier = Modifier
             .fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally){
-            Text("Welcome to BiblioTrack!", modifier = Modifier.padding(bottom = 24.dp))
+            Text("Welcome to BiblioTrack!", modifier = Modifier.padding(bottom = 24.dp), color = Color.Black)
             Button(onClick ={
                 navController.navigate(route = AppScreens.BookListScreen.name)}
             ) {
-                Text("Click here to start!")
+                Text("Tap here to start!")
             }
         }
     }

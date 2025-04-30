@@ -60,7 +60,7 @@ fun ColorChangeScreen(
     bookEntryViewModel: BookEntryViewModel
 ) {
     val isExpanded = remember { mutableStateOf(false) }
-    val colors = listOf("Default","Light", "Dark", "Yellow", "Purple", "Green")
+    val colors = listOf("Light","Dark", "Default", "Yellow", "Purple", "Green")
     val defaultColor = MaterialTheme.colorScheme.primaryContainer
     @Composable
     fun DropDown() {

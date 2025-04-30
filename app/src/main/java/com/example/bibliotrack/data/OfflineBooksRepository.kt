@@ -1,5 +1,6 @@
 package com.example.bibliotrack.data
 
+import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 
 class OfflineBooksRepository(private val bookDao: BookDao) : BooksRepository {
@@ -8,6 +9,9 @@ class OfflineBooksRepository(private val bookDao: BookDao) : BooksRepository {
 
     override fun getBookStream(id: Int): Flow<Book?> =
         bookDao.getBook(id)
+
+    override fun getQueryStream(query: String): Flow<List<Book>> =
+        bookDao.getQueryList(query)
 
     override fun getAllList(): List<Book> =
         bookDao.getAllList()
