@@ -133,8 +133,8 @@ fun BookListScreen(
                     columns = GridCells.Fixed(1)
                 ) {
                     items(items = bookListUiState.itemList, key = {it.id}){ book ->
-                        BookCard(book = book, navController = navController) {
-                            navController.navigate(route = AppScreens.DetailScreen.name + "/${book.title}")
+                        BookCard(book = book, navController = navController, bookEntryViewModel = bookEntryViewModel, coroutineScope = coroutineScope) {
+                            navController.navigate(route = AppScreens.DetailScreen.name + "/${book.id}")
                         }
                     }
                 }
@@ -152,6 +152,8 @@ fun BookListScreen(
 fun BookCard(
     book: Book,
     navController: NavController,
+    bookEntryViewModel: BookEntryViewModel,
+    coroutineScope: CoroutineScope,
     itemClick: (String) -> Unit = {}
 ) {
     //This composable contains the cards for each book

@@ -21,14 +21,14 @@ class BookEditViewModel(
             println(savedStateHandle)
             val bookFlow = booksRepository.getAllBooksStream()
             val bookList = bookFlow.filterNotNull().first()
-            bookUiState = bookList.get(0)
-                .toBookUiState(true)
+//            bookUiState = bookList.get(0)
+//                .toBookUiState(true)
         }
     }
 
     var bookUiState by mutableStateOf(BookUiState())
         private set
-    private val bookId: Int = 1
+//    private val bookId: Int = 1
 //        checkNotNull(savedStateHandle[])
 
     private fun validateInput(uiState: BookDetails = bookUiState.bookDetails): Boolean {

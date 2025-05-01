@@ -1,5 +1,6 @@
 package com.example.bibliotrack.model
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -59,6 +60,11 @@ class BookEntryViewModel(private val booksRepository: BooksRepository) : ViewMod
         if (validateInput()) {
             booksRepository.insertBook((bookUiState.bookDetails.toBook()))
         }
+    }
+
+    suspend fun deleteItem(book: Book) {
+        Log.d("Test", bookUiState.bookDetails.toBook().title)
+        booksRepository.deleteBook(book)
     }
 
     fun changeColor(color: Color) {

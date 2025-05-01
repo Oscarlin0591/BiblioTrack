@@ -10,18 +10,26 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -30,6 +38,7 @@ import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSavedStateRegistryOwner
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -44,40 +53,25 @@ import androidx.navigation.compose.rememberNavController
 import com.example.bibliotrack.AppViewModelProvider
 import com.example.bibliotrack.R
 import com.example.bibliotrack.data.Book
-import com.example.bibliotrack.model.BookDetailsUiState
-import com.example.bibliotrack.model.BookDetailsViewModel
 import com.example.bibliotrack.model.BookEntryViewModel
+import com.example.bibliotrack.model.BookListUiState
 import com.example.bibliotrack.model.toBook
+import com.example.bibliotrack.model.toBookDetails
 import com.example.bibliotrack.navigation.AppBar
 import com.example.bibliotrack.navigation.AppScreens
+import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @ExperimentalAnimationApi
 @Composable
 fun DetailsScreen(
     navController: NavController,
-    bookDetailsViewModel: BookDetailsViewModel,
     bookEntryViewModel: BookEntryViewModel,
-    bookTitle: String?
+    bookId: Int
 ) {
-    val savedStateRegistryOwner = checkNotNull(LocalSavedStateRegistryOwner.current)
-    val viewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current)
-
-//    val bookDetailsViewModel: BookDetailsViewModel = viewModel(
-//        factory = AppViewModelProvider.Factory
-//        ,
-//        extras = remember {
-//            viewModelStoreOwner.defaultViewModelCreationExtras
-//                .withSavedState(
-//                    savedStateRegistryOwner,
-//                    viewModelStoreOwner,
-//                    key = "bookTitle",
-//                    value = bookTitle
-//                )
-//        }
-//    )
-    val uiState = bookDetailsViewModel.uiState.collectAsState()
+    val uiState = bookEntryViewModel.bookListUiState.collectAsState()
     val coroutineScope = rememberCoroutineScope()
+
     Scaffold(
         topBar = {
             AppBar(
@@ -109,7 +103,7 @@ fun DetailsScreen(
             Text(buildAnnotatedString {
                 withStyle(
                     style = SpanStyle(
-                        color = Color.Blue,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                         fontWeight = FontWeight.Bold,
                         fontSize = 24.sp
                     )
@@ -127,7 +121,14 @@ fun DetailsScreen(
 
             }, modifier = Modifier.padding(6.dp))
             BookDetailBody(
-                bookDetailsUiState = uiState.value,
+                bookListUiState = uiState.value,
+                bookId = bookId,
+                onDelete = {
+                    coroutineScope.launch {
+                        bookEntryViewModel.deleteItem(uiState.value.itemList[bookId])
+                        navController.navigateUp()
+                    }
+                },
                 modifier = Modifier
             )
 
@@ -138,20 +139,43 @@ fun DetailsScreen(
 }
 @Composable
 private fun BookDetailBody(
-    bookDetailsUiState: BookDetailsUiState,
+    bookListUiState: BookListUiState,
+    bookId: Int,
+    onDelete: () -> Unit,
     modifier: Modifier
 ) {
     Column {
+        var deleteConfirmationRequired by rememberSaveable { mutableStateOf(false)  }
         BookDetails(
-            book = bookDetailsUiState.bookDetails.toBook(),
+            book = bookListUiState.itemList[bookId],
             modifier = Modifier.fillMaxWidth())
+
+        OutlinedButton(
+            onClick = { deleteConfirmationRequired = true},
+            shape = MaterialTheme.shapes.small,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Delete")
+        }
+        if (deleteConfirmationRequired) {
+            DeleteConfirmationDialog(
+                onDeleteConfirm = {
+                    deleteConfirmationRequired = false
+                    onDelete()
+                },
+                onDeleteCancel = { deleteConfirmationRequired = false },
+                modifier = Modifier.padding(16.dp)
+            )
+        }
     }
 }
 
 @Composable
 fun BookDetails(
-    book: Book, modifier: Modifier = Modifier
+    book: Book,
+    modifier: Modifier = Modifier
 ) {
+
     Card(
         modifier = modifier,
         colors = CardDefaults.cardColors(
@@ -170,6 +194,29 @@ fun BookDetails(
             Text(text = "Chapters: ${book.chaptersRead}/${book.chapters}")
             Text(text = "Pages: ${book.pagesRead}/${book.pages}")
             Text(text = "Ratings: ${book.rating}")
+
         }
     }
+}
+
+@Composable
+private fun DeleteConfirmationDialog(
+    onDeleteConfirm: () -> Unit,
+    onDeleteCancel: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    AlertDialog(onDismissRequest = { /* Do nothing */ },
+        title = { Text("Attention") },
+        text = { Text("Are you sure you want to delete?") },
+        modifier = modifier,
+        dismissButton = {
+            TextButton(onClick = onDeleteCancel) {
+                Text("No")
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = onDeleteConfirm) {
+                Text("Yes")
+            }
+        })
 }

@@ -30,7 +30,6 @@ import androidx.navigation.navArgument
 import com.example.bibliotrack.AppViewModelProvider
 import com.example.bibliotrack.data.Book
 import com.example.bibliotrack.model.BookDetails
-import com.example.bibliotrack.model.BookDetailsViewModel
 import com.example.bibliotrack.model.BookEditViewModel
 import com.example.bibliotrack.model.BookEntryViewModel
 import com.example.bibliotrack.screens.AboutScreen
@@ -145,8 +144,6 @@ fun BookNavigation() {
     val navController = rememberNavController()
     val bookEntryViewModel: BookEntryViewModel = viewModel(factory = AppViewModelProvider.Factory)
     val bookEditViewModel: BookEditViewModel = viewModel(factory = AppViewModelProvider.Factory)
-    val bookDetailsViewModel: BookDetailsViewModel = viewModel(factory = AppViewModelProvider.Factory)
-//    bookViewModel.getData()
 
     NavHost(
         navController = navController,
@@ -167,15 +164,16 @@ fun BookNavigation() {
             )
         }
 
-        composable(route = AppScreens.DetailScreen.name + "/{title}",
-            arguments = listOf(navArgument(name = "title") { type = NavType.StringType})
+        composable(route = AppScreens.DetailScreen.name + "/{bookId}",
+            arguments = listOf(navArgument(name = "bookId") { type = NavType.IntType})
         ) { backStackEntry ->
-            DetailsScreen(
-                navController = navController,
-                bookDetailsViewModel = bookDetailsViewModel,
-                bookEntryViewModel = bookEntryViewModel,
-                backStackEntry.arguments?.getString("title"),
-            )
+            backStackEntry.arguments?.getInt("id")?.let {
+                DetailsScreen(
+                    navController = navController,
+                    bookEntryViewModel = bookEntryViewModel,
+                    it
+                )
+            }
         }
         composable(AppScreens.AboutScreen.name) {
             AboutScreen(
