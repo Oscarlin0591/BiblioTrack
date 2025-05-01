@@ -45,6 +45,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
@@ -112,14 +113,20 @@ fun BookListScreen(
         Column(modifier = Modifier
             .fillMaxSize()
             .padding(vertical = 90.dp), verticalArrangement = Arrangement.Top) {
-            TextField(
-                onValueChange = {
-                    bookEntryViewModel.query = it
-                    coroutineScope.launch {
-                        bookEntryViewModel.updateListUiState(bookEntryViewModel.query)
-                    }
-                },
-                value = bookEntryViewModel.query)
+            Row (
+                Modifier.fillMaxWidth().align(Alignment.CenterHorizontally)
+            ){
+                TextField(
+                    onValueChange = {
+                        bookEntryViewModel.query = it
+                        coroutineScope.launch {
+                            bookEntryViewModel.updateListUiState(bookEntryViewModel.query)
+                        }
+                    },
+                    value = bookEntryViewModel.query
+                )
+            }
+
             if(bookListUiState.itemList.isNotEmpty()){
                 LazyVerticalGrid(
                     //lazy column for all the books
@@ -139,14 +146,6 @@ fun BookListScreen(
     }
 
 
-}
-
-@Composable
-fun Search(bookEntryViewModel: BookEntryViewModel){
-
-    Row (modifier = Modifier.fillMaxWidth()){
-
-    }
 }
 
 @Composable

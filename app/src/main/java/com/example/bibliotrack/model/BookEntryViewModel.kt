@@ -23,13 +23,14 @@ class BookEntryViewModel(private val booksRepository: BooksRepository) : ViewMod
         private const val TIMEOUT_MILLIS = 5_000L
     }
 
-    var bookListUiState: StateFlow<BookListUiState> =
-        booksRepository.getAllBooksStream().map { BookListUiState(it) }
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
-                initialValue = BookListUiState()
-            )
+    var bookListUiState: StateFlow<BookListUiState> by mutableStateOf(booksRepository.getAllBooksStream().map { BookListUiState(it) }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
+            initialValue = BookListUiState()
+        )
+    )
+
 
     var bookUiState by mutableStateOf(BookUiState())
         private set
