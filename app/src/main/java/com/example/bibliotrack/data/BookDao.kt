@@ -28,6 +28,6 @@ interface BookDao {
     @Query("SELECT * from books")
     fun getAllList(): List<Book>
 
-    @Query("SELECT * from books WHERE title LIKE :query ORDER BY title ASC")
+    @Query("SELECT * from books WHERE title LIKE '%' || :query || '%' ORDER BY title ASC")
     fun getQueryList(query: String): Flow<List<Book>>
 }
