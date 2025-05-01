@@ -41,7 +41,6 @@ fun AddBookScreen(
                 currentScreen = AppScreens.AboutScreen.name,
                 navController = navController,
                 navigateUp = { navController.navigateUp() },
-                textToShare = "",
                 context = LocalContext.current,
                 modifier = Modifier
             )

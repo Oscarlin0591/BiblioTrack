@@ -5,6 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
+import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bibliotrack.data.Book
@@ -52,7 +53,12 @@ class BookEntryViewModel(private val booksRepository: BooksRepository) : ViewMod
 
     private fun validateInput(uiState: BookDetails = bookUiState.bookDetails): Boolean {
         return with(uiState) {
-            title.isNotBlank() && author.isNotBlank() && chapters.isNotBlank() && pages.isNotBlank() && rating.isNotBlank()
+            title.isNotBlank() &&
+            author.isNotBlank() &&
+            chapters.isNotBlank() &&
+            chapters.isDigitsOnly() &&
+            pages.isNotBlank() &&
+            rating.isNotBlank()
         }
     }
 
@@ -63,7 +69,6 @@ class BookEntryViewModel(private val booksRepository: BooksRepository) : ViewMod
     }
 
     suspend fun deleteItem(book: Book) {
-        Log.d("Test", bookUiState.bookDetails.toBook().title)
         booksRepository.deleteBook(book)
     }
 

@@ -32,7 +32,7 @@ fun HomeScreen(
     bookEntryViewModel: BookEntryViewModel
 ) {
     Scaffold(
-        //containerColor = MaterialTheme.colorScheme.primaryContainer,
+        containerColor = bookEntryViewModel.backgroundColor,
         topBar = {
             AppBar(
                 currentScreen = AppScreens.HomeScreen.name,
@@ -40,27 +40,27 @@ fun HomeScreen(
                 navigateUp = { navController.navigateUp() },
                 context = LocalContext.current,
                 textToShare = "",
+                textToShare1 = "",
                 bookEntryViewModel = bookEntryViewModel,
                 modifier = Modifier
             )
         },
         bottomBar = {
             BottomAppBar (
-                containerColor = MaterialTheme.colorScheme.secondary,
+                containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = Color.Black,
                 modifier = Modifier.windowInsetsBottomHeight(insets = WindowInsets(bottom=50.dp))
             ) {}
-        },
-        containerColor = bookEntryViewModel.backgroundColor
+        }
     ) {
 
         Column (modifier = Modifier
             .fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally){
-            Text("Welcome to BiblioTrack!", modifier = Modifier.padding(bottom = 24.dp), color = Color.Black)
+            Text("Welcome to BiblioTrack!", modifier = Modifier.padding(bottom = 24.dp), color = MaterialTheme.colorScheme.onPrimary)
             Button(onClick ={
                 navController.navigate(route = AppScreens.BookListScreen.name)}
             ) {
-                Text("Tap here to start!")
+                Text("Start")
             }
         }
     }

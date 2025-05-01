@@ -66,13 +66,14 @@ fun BookListScreen(
                 navigateUp = { navController.navigateUp() },
                 context = LocalContext.current,
                 textToShare = "",
+                textToShare1 = "",
                 bookEntryViewModel = bookEntryViewModel,
                 modifier = Modifier
             )
         },
         bottomBar = { //bottom app bar for cleaner look of the app
             BottomAppBar(
-                containerColor = MaterialTheme.colorScheme.secondary,
+                containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = Color.Black,
                 modifier = Modifier.windowInsetsBottomHeight(insets = WindowInsets(bottom = 50.dp))
             ) {}

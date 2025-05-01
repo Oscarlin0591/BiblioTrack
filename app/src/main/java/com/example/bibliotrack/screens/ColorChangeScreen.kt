@@ -6,10 +6,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -42,12 +45,12 @@ fun ColorChangeScreen(
 ) {
     val isExpanded = remember { mutableStateOf(false) }
     val colors = listOf("Light","Dark", "Default", "Yellow", "Purple", "Green")
-    val defaultColor = MaterialTheme.colorScheme.primaryContainer
+    val defaultColor = MaterialTheme.colorScheme.secondary
     @Composable
     fun DropDown() {
         Column {
             Row (modifier = Modifier.clickable { isExpanded.value = true }){
-                Text(colors[bookEntryViewModel.dropDownPosition])
+                Text(colors[bookEntryViewModel.dropDownPosition], color = MaterialTheme.colorScheme.onPrimary)
                 Icon(Icons.Default.ArrowDropDown, contentDescription = null)
             }
         }
@@ -60,10 +63,16 @@ fun ColorChangeScreen(
                 currentScreen = AppScreens.AboutScreen.name,
                 navController = navController,
                 navigateUp = { navController.navigateUp() },
-                textToShare = "",
                 context = LocalContext.current,
                 modifier = Modifier
             )
+        },
+        bottomBar = {
+            BottomAppBar(
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = Color.Black,
+                modifier = Modifier.windowInsetsBottomHeight(insets = WindowInsets(bottom = 50.dp))
+            ) {}
         },
         containerColor = bookEntryViewModel.backgroundColor
 
@@ -77,6 +86,7 @@ fun ColorChangeScreen(
         ) {
             Text(
                 "Change the background color by tapping a color:",
+                color = MaterialTheme.colorScheme.onPrimary,
                 style = MaterialTheme.typography.titleLarge
             )
             Box {
@@ -87,7 +97,7 @@ fun ColorChangeScreen(
                     colors.forEachIndexed { index, color ->
                         DropdownMenuItem(
                             text = {
-                                Text(text = color)
+                                Text(text = color, color = MaterialTheme.colorScheme.onPrimary)
                             },
                             onClick = {
                                 isExpanded.value = false

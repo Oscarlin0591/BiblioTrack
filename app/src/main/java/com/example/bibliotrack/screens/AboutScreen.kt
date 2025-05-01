@@ -37,14 +37,13 @@ fun AboutScreen(
                 currentScreen = AppScreens.AboutScreen.name,
                 navController = navController,
                 navigateUp = { navController.navigateUp() },
-                textToShare = "",
                 context = LocalContext.current,
                 modifier = Modifier
             )
         },
         bottomBar = {
             BottomAppBar(
-                containerColor = MaterialTheme.colorScheme.secondary,
+                containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = Color.Black,
                 modifier = Modifier.windowInsetsBottomHeight(insets = WindowInsets(bottom = 50.dp))
             ) {}
@@ -57,11 +56,13 @@ fun AboutScreen(
                         "\nbut you forgot where you left off! That’s where our app comes in! " +
                         "\nIt’s an all-in-one bookmarking app. The app allows you to manually input where you left off on a book, so you don’t have to guess what chapter you last viewed. " +
                         "\nThis app is perfect for people who read a lot of books. ",
+                color = MaterialTheme.colorScheme.primaryContainer,
                 modifier = Modifier.padding(8.dp)
             )
             HorizontalDivider(modifier = Modifier.padding(vertical = 52.dp))
             Text(
                 text = "This app is made by Jacob Levin and Oscar Lin",
+                color = MaterialTheme.colorScheme.primaryContainer,
                 style = MaterialTheme.typography.titleLarge
             )
         }

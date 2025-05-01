@@ -16,6 +16,7 @@ import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -64,20 +65,23 @@ fun DetailsScreen(
 
     Scaffold(
         topBar = {
-            AppBar(
-                currentScreen = AppScreens.DetailScreen.name,
-                navController = navController,
-                navigateUp = { navController.navigateUp() },
-                context = LocalContext.current,
-                textToShare = "Share Text",
-                bookEntryViewModel = bookEntryViewModel,
-                modifier = Modifier
-            )
+            uiState.value.itemList.find { it.id == bookId }?.let {
+                AppBar(
+                    currentScreen = AppScreens.DetailScreen.name,
+                    navController = navController,
+                    navigateUp = { navController.navigateUp() },
+                    context = LocalContext.current,
+                    textToShare = it.title,
+                    textToShare1 = "${it.chaptersRead/it.chapters} read",
+                    bookEntryViewModel = bookEntryViewModel,
+                    modifier = Modifier
+                )
+            }
 
         },
         bottomBar = { //bottom app bar for cleaner look of the app
             BottomAppBar(
-                containerColor = MaterialTheme.colorScheme.secondary,
+                containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = Color.Black,
                 modifier = Modifier.windowInsetsBottomHeight(insets = WindowInsets(bottom = 50.dp))
             ) {}
@@ -93,22 +97,13 @@ fun DetailsScreen(
             Text(buildAnnotatedString {
                 withStyle(
                     style = SpanStyle(
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        color = MaterialTheme.colorScheme.primaryContainer,
                         fontWeight = FontWeight.Bold,
                         fontSize = 24.sp
                     )
                 ) {
                     append("Book info: ")
                 }
-                withStyle(
-                    style = SpanStyle(
-                        color = Color.Blue,
-                        shadow = Shadow(Color.Black, Offset(1f, 1f), 0.2f),
-                        fontSize = 20.sp
-                    )
-                ) {
-                }
-
             }, modifier = Modifier.padding(6.dp))
             BookDetailBody(
                 bookListUiState = uiState.value,
@@ -149,9 +144,15 @@ private fun BookDetailBody(
         OutlinedButton(
             onClick = { deleteConfirmationRequired = true},
             shape = MaterialTheme.shapes.small,
+            colors = ButtonColors(
+                MaterialTheme.colorScheme.secondary,
+                contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                disabledContainerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+                disabledContentColor = MaterialTheme.colorScheme.surfaceContainerHigh
+            ),
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Delete")
+            Text("Delete", color = MaterialTheme.colorScheme.primaryContainer)
         }
         if (deleteConfirmationRequired) {
             DeleteConfirmationDialog(

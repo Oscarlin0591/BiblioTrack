@@ -19,6 +19,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavType
@@ -44,6 +45,7 @@ fun AppBar(
     navController: NavController,
     navigateUp: () -> Unit,
     textToShare: String,
+    textToShare1: String,
     context: Context,
     bookEntryViewModel: BookEntryViewModel = viewModel(factory = AppViewModelProvider.Factory),
     modifier: Modifier
@@ -51,7 +53,7 @@ fun AppBar(
     val backStackEntry by navController.currentBackStackEntryAsState()
     val canNavigateBack = backStackEntry?.destination?.route != AppScreens.HomeScreen.name
     TopAppBar(
-        title = { Text("BibioTrack", style = MaterialTheme.typography.titleLarge) },
+        title = { Text("BiblioTrack", color = MaterialTheme.colorScheme.primaryContainer) },
         colors = TopAppBarDefaults.mediumTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.primary
         ),
@@ -61,6 +63,7 @@ fun AppBar(
                 IconButton(onClick = navigateUp) {
                     Icon(
                         imageVector = Icons.Default.KeyboardArrowUp,
+                        tint = MaterialTheme.colorScheme.primaryContainer,
                         contentDescription = ""
                     )
                 }
@@ -73,6 +76,7 @@ fun AppBar(
                         type = "text/plain"
                         putExtra(Intent.EXTRA_SUBJECT, "Check out this book!")
                         putExtra(Intent.EXTRA_TEXT, textToShare)
+                        putExtra(Intent.EXTRA_TEXT, textToShare1)
                     }
                     context.startActivity(
                         Intent.createChooser(
@@ -83,6 +87,7 @@ fun AppBar(
                 }) {
                     Icon(
                         imageVector = Icons.Default.Share,
+                        tint = MaterialTheme.colorScheme.primaryContainer,
                         contentDescription = "Share items"
                     )
                 }
@@ -90,12 +95,12 @@ fun AppBar(
             IconButton(
                 onClick = { navController.navigate(route = AppScreens.ColorChangeScreen.name) }
             ) {
-                Icon(Icons.Default.Settings, contentDescription = null)
+                Icon(Icons.Default.Settings, tint = MaterialTheme.colorScheme.primaryContainer, contentDescription = null)
             }
             IconButton(
                 onClick = { navController.navigate(route = AppScreens.AboutScreen.name) }
             ) {
-                Icon(Icons.Default.Info, contentDescription = null)
+                Icon(Icons.Default.Info, tint = MaterialTheme.colorScheme.primaryContainer, contentDescription = null)
             }
         }
     )
@@ -107,16 +112,15 @@ fun PlainBar(
     currentScreen: String,
     navController: NavController,
     navigateUp: () -> Unit,
-    textToShare: String,
     context: Context,
     modifier: Modifier
 ) {
     val backStackEntry by navController.currentBackStackEntryAsState()
     val canNavigateBack = backStackEntry?.destination?.route != AppScreens.HomeScreen.name
     TopAppBar(
-        title = { Text("BibioTrack") },
+        title = { Text("BiblioTrack", color = MaterialTheme.colorScheme.primaryContainer) },
         colors = TopAppBarDefaults.mediumTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.secondary
+            containerColor = MaterialTheme.colorScheme.primary
         ),
         modifier = modifier,
         navigationIcon = {
