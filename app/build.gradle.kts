@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.androidx.ui.text.google.fonts)
     implementation(libs.com.google.devtools.ksp.gradle.plugin)
     implementation(libs.androidx.core.splashscreen)
+    implementation("androidx.core:core-splashscreen:1.0.1")
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.appcompat)
