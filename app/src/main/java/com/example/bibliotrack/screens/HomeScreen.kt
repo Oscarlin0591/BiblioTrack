@@ -1,12 +1,10 @@
 package com.example.bibliotrack.screens
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.material3.BottomAppBar
@@ -22,12 +20,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.bibliotrack.R
 import com.example.bibliotrack.model.BookEntryViewModel
-import com.example.bibliotrack.model.BookViewModel
 import com.example.bibliotrack.navigation.AppBar
 import com.example.bibliotrack.navigation.AppScreens
-import com.example.bibliotrack.navigation.NavigationDestination
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)

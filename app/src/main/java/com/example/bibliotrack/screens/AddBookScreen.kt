@@ -23,12 +23,9 @@ import com.example.bibliotrack.MyApp
 import com.example.bibliotrack.model.BookDetails
 import com.example.bibliotrack.model.BookEntryViewModel
 import com.example.bibliotrack.model.BookUiState
-import com.example.bibliotrack.model.BookViewModel
-import com.example.bibliotrack.navigation.AppBar
 import com.example.bibliotrack.navigation.AppScreens
 import com.example.bibliotrack.navigation.PlainBar
 import kotlinx.coroutines.launch
-import java.util.Date
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @ExperimentalAnimationApi

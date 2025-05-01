@@ -1,6 +1,7 @@
 package com.example.bibliotrack.navigation
 
 import com.example.bibliotrack.screens.AddBookScreen
+import com.example.bibliotrack.screens.BookEditScreen
 
 enum class AppScreens {
     HomeScreen,
@@ -9,7 +10,8 @@ enum class AppScreens {
     SettingScreen,
     AddBookScreen,
     ColorChangeScreen,
-    BookListScreen;
+    BookListScreen,
+    BookEditScreen;
     companion object {
         fun fromRoute (route: String?): AppScreens
             = when(route?.substringBefore("/"))
@@ -21,6 +23,7 @@ enum class AppScreens {
                 AddBookScreen.name -> AddBookScreen
                 ColorChangeScreen.name -> ColorChangeScreen
                 BookListScreen.name -> BookListScreen
+                BookEditScreen.name -> BookEditScreen
                 null -> HomeScreen
                 else -> throw IllegalArgumentException("Route $route is not recognized")
             }

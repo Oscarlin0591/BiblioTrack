@@ -24,9 +24,11 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -49,7 +51,6 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -73,8 +74,6 @@ fun BookListScreen(
     bookEntryViewModel: BookEntryViewModel
 ) {
     val bookListUiState by bookEntryViewModel.bookListUiState.collectAsState()
-//        Book(id = 1, title = "Title 1", author = "Author 1", finished = false, chapters = 10, chaptersRead = 1, pages = 100, pagesRead = 20, rating = 5.0, createdAt = Date().toString()),
-//        Book(id=2, title="Title 2", author ="Author 1", finished = false, chapters = 10, chaptersRead = 1, pages = 100, pagesRead = 20, rating = 5.0, createdAt = Date().toString())
     val coroutineScope = rememberCoroutineScope()
     Scaffold(
         topBar = { //top app bar
@@ -127,8 +126,8 @@ fun BookListScreen(
                     columns = GridCells.Fixed(1)
                 ) {
                     items(items = bookListUiState.itemList, key = {it.id}){ book ->
-                        BookCard(book = book) {
-                            navController.navigate(route = AppScreens.DetailScreen.name + "/$book")
+                        BookCard(book = book, navController = navController) {
+                            navController.navigate(route = AppScreens.DetailScreen.name + "/${book.title}")
                         }
                     }
                 }
@@ -153,6 +152,7 @@ fun Search(bookEntryViewModel: BookEntryViewModel){
 @Composable
 fun BookCard(
     book: Book,
+    navController: NavController,
     itemClick: (String) -> Unit = {}
 ) {
     //This composable contains the cards for each book
@@ -173,22 +173,30 @@ fun BookCard(
             },
         shape = RoundedCornerShape(corner = CornerSize(16.dp)),
     ) {
-        Column(
-            modifier = Modifier.padding(5.dp),
-            verticalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text( //book title
-                text = "Title: ${book.title}",
-                style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(start = 10.dp)
-            )
-            Text( // book genre
-                text = "Author: ${book.author}",
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(start = 10.dp)
-            )
+        Row (horizontalArrangement = Arrangement.SpaceBetween){
+            Column(
+                modifier = Modifier.padding(5.dp),
+                verticalArrangement = Arrangement.SpaceBetween
+            ) {
 
+                Text( //book title
+                    text = "Title: ${book.title}",
+                    style = MaterialTheme.typography.titleMedium,
+                    modifier = Modifier.padding(start = 10.dp)
+                )
+                Text( // book genre
+                    text = "Author: ${book.author}",
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.padding(start = 10.dp)
+                )
+
+            }
+            Button(onClick = {navController.navigate(route = AppScreens.BookEditScreen.name + "")}) {
+                Icon(imageVector = Icons.Default.Edit,
+                    contentDescription = null)
+            }
         }
+
     }
 }
 

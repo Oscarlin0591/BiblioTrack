@@ -6,7 +6,10 @@ import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.example.bibliotrack.model.BookDetailsViewModel
+import com.example.bibliotrack.model.BookEditViewModel
 import com.example.bibliotrack.model.BookEntryViewModel
+import com.example.bibliotrack.model.ListViewModel
 
 /**
  * Provides Factory to create instance of ViewModel for the entire Inventory app
@@ -18,13 +21,20 @@ object AppViewModelProvider {
             BookEntryViewModel(inventoryApplication().container.booksRepository)
         }
 
-        // Initializer for ItemDetailsViewModel
-//        initializer {
-//            ItemDetailsViewModel(
-//                this.createSavedStateHandle(),
-//                inventoryApplication().container.itemsRepository
-//            )
-//        }
+        // Initializer for BookEditViewModel
+        initializer {
+            BookEditViewModel(
+                this.createSavedStateHandle(),
+                inventoryApplication().container.booksRepository
+            )
+        }
+
+        initializer {
+            BookDetailsViewModel(
+                this.createSavedStateHandle(),
+                inventoryApplication().container.booksRepository
+            )
+        }
 
     }
 }

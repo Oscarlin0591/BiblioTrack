@@ -18,12 +18,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.bibliotrack.model.BookEntryViewModel
-import com.example.bibliotrack.model.BookViewModel
-import com.example.bibliotrack.navigation.AppBar
 import com.example.bibliotrack.navigation.AppScreens
 import com.example.bibliotrack.navigation.PlainBar
 
