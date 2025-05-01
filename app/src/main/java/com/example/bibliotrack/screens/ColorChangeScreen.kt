@@ -32,19 +32,11 @@ import com.example.bibliotrack.model.BookEntryViewModel
 import com.example.bibliotrack.navigation.AppScreens
 import com.example.bibliotrack.navigation.PlainBar
 
-//object SettingDestination : NavigationDestination {
-//    override val route = "SettingScreen"
-//    override val titleRes = R.string.setting_screen
-//    const val itemIdArg = "itemId"
-//    val routeWithArgs = "$route/{$itemIdArg}"
-//}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @ExperimentalAnimationApi
 @Composable
 fun ColorChangeScreen(
-//    navigateToHomeScreen: (Int) -> Unit,
     navController: NavController,
     bookEntryViewModel: BookEntryViewModel
 ) {
@@ -127,111 +119,7 @@ fun ColorChangeScreen(
                     }
                 }
             }
-
-            //white button
-            /*Card(onClick = {/*bookViewModel.updateColor(color = Color.White)*/},
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(100.dp)
-            ) {
-                Box(Modifier
-                    .background(Color.White)
-                    .weight(1f)
-                    .height(50.dp)
-                    .fillMaxWidth()
-                    .align(alignment = Alignment.CenterHorizontally)){
-
-                }
-                Text(text = "White", modifier = Modifier.align(Alignment.CenterHorizontally))
-            }
-            //black button
-            Card(onClick = {/*bookViewModel.updateColor(color = Color.Black)*/},
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(100.dp)
-            ) {
-                Box(Modifier
-                    .background(Color.Black)
-                    .weight(1f)
-                    .height(50.dp)
-                    .fillMaxWidth()
-                    .align(alignment = Alignment.CenterHorizontally)){
-
-                }
-                Text(text = "Black", modifier = Modifier.align(Alignment.CenterHorizontally))
-            }
-            //gray button
-            Card(onClick = {/*bookViewModel.updateColor(color = Color.Gray)*/},
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(100.dp)
-            ) {
-                Box(Modifier
-                    .background(Color.Gray)
-                    .weight(1f)
-                    .height(50.dp)
-                    .fillMaxWidth()
-                    .align(alignment = Alignment.CenterHorizontally)){
-
-                }
-                Text(text = "Gray", modifier = Modifier.align(Alignment.CenterHorizontally))
-            }
-            //green button
-            Card(onClick = {/*bookViewModel.updateColor(color = Color.Green)*/},
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(100.dp)
-            ) {
-                Box(Modifier
-                    .background(Color.Green)
-                    .weight(1f)
-                    .height(50.dp)
-                    .fillMaxWidth()
-                    .align(alignment = Alignment.CenterHorizontally)){
-
-                }
-                Text(text = "Green", modifier = Modifier.align(Alignment.CenterHorizontally))
-            }
-            //magenta button
-            Card(onClick = {/*bookViewModel.updateColor(color = Color.Magenta)*/},
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(100.dp)
-            ) {
-                Box(Modifier
-                    .background(Color.Magenta)
-                    .weight(1f)
-                    .height(50.dp)
-                    .fillMaxWidth()
-                    .align(alignment = Alignment.CenterHorizontally)){
-
-                }
-                Text(text = "Magenta", modifier = Modifier.align(Alignment.CenterHorizontally))
-            }
-            //yellow button
-            Card(onClick = {/*bookViewModel.updateColor(color = Color.Yellow)*/},
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(100.dp)
-            ) {
-                Box(Modifier
-                    .background(Color.Yellow)
-                    .weight(1f)
-                    .height(50.dp)
-                    .fillMaxWidth()
-                    .align(alignment = Alignment.CenterHorizontally)){
-
-                }
-                Text(text = "Yellow", modifier = Modifier.align(Alignment.CenterHorizontally))
-            }
-        }*/
-
-
         }
-
-
-
-
     }
 }
 

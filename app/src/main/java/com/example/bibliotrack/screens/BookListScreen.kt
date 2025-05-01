@@ -1,13 +1,10 @@
 package com.example.bibliotrack.screens
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.util.Log
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,18 +12,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -34,11 +28,8 @@ import androidx.compose.material3.CardColors
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SearchBar
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -48,24 +39,15 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.bibliotrack.AppViewModelProvider
-import com.example.bibliotrack.R
 import com.example.bibliotrack.data.Book
 import com.example.bibliotrack.model.BookEntryViewModel
-import com.example.bibliotrack.model.ListViewModel
 import com.example.bibliotrack.navigation.AppBar
 import com.example.bibliotrack.navigation.AppScreens
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
-import java.util.Date
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -92,14 +74,14 @@ fun BookListScreen(
             BottomAppBar(
                 containerColor = MaterialTheme.colorScheme.secondary,
                 contentColor = Color.Black,
-                modifier = Modifier.windowInsetsBottomHeight(insets = WindowInsets(bottom=50.dp))
+                modifier = Modifier.windowInsetsBottomHeight(insets = WindowInsets(bottom = 50.dp))
             ) {}
         },
         floatingActionButton = {
             FloatingActionButton(
                 containerColor = MaterialTheme.colorScheme.primaryContainer,
                 onClick = {
-                    navController.navigate(route= AppScreens.AddBookScreen.name)
+                    navController.navigate(route = AppScreens.AddBookScreen.name)
                 }
             ) {
                 Icon(
@@ -110,12 +92,18 @@ fun BookListScreen(
         },
         containerColor = bookEntryViewModel.backgroundColor
     ) {
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(vertical = 90.dp), verticalArrangement = Arrangement.Top) {
-            Row (
-                Modifier.fillMaxWidth().align(Alignment.CenterHorizontally)
-            ){
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(vertical = 90.dp), verticalArrangement = Arrangement.Top
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp)
+            ) {
                 TextField(
                     onValueChange = {
                         bookEntryViewModel.query = it
@@ -123,22 +111,35 @@ fun BookListScreen(
                             bookEntryViewModel.updateListUiState(bookEntryViewModel.query)
                         }
                     },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Default.Search,
+                            contentDescription = null
+                        )
+                    },
+                    placeholder = {
+                        Text("Search for a book")
+                    },
                     value = bookEntryViewModel.query
                 )
             }
 
-            if(bookListUiState.itemList.isNotEmpty()){
+            if (bookListUiState.itemList.isNotEmpty()) {
                 LazyVerticalGrid(
                     //lazy column for all the books
                     columns = GridCells.Fixed(1)
                 ) {
-                    items(items = bookListUiState.itemList, key = {it.id}){ book ->
-                        BookCard(book = book, navController = navController, bookEntryViewModel = bookEntryViewModel, coroutineScope = coroutineScope) {
+                    items(items = bookListUiState.itemList, key = { it.id }) { book ->
+                        BookCard(
+                            book = book,
+                            navController = navController,
+                            bookEntryViewModel = bookEntryViewModel,
+                        ) {
                             navController.navigate(route = AppScreens.DetailScreen.name + "/${book.id}")
                         }
                     }
                 }
-            }else{
+            } else {
                 Text("Tab the + button to add a bookmark")
             }
 
@@ -153,7 +154,6 @@ fun BookCard(
     book: Book,
     navController: NavController,
     bookEntryViewModel: BookEntryViewModel,
-    coroutineScope: CoroutineScope,
     itemClick: (String) -> Unit = {}
 ) {
     //This composable contains the cards for each book
@@ -165,16 +165,15 @@ fun BookCard(
             disabledContentColor = MaterialTheme.colorScheme.onSurfaceVariant
         ),
         modifier = Modifier
-            .padding(4.dp)
+            .padding(8.dp)
             .fillMaxSize(.5f)
             .height(100.dp)
             .clickable {
-//                add itemclick
                 itemClick(book.title)
             },
         shape = RoundedCornerShape(corner = CornerSize(16.dp)),
     ) {
-        Row (horizontalArrangement = Arrangement.SpaceBetween){
+        Row(horizontalArrangement = Arrangement.SpaceBetween) {
             Column(
                 modifier = Modifier.padding(5.dp),
                 verticalArrangement = Arrangement.SpaceBetween
@@ -192,9 +191,13 @@ fun BookCard(
                 )
 
             }
-            Button(onClick = {navController.navigate(route = AppScreens.BookEditScreen.name + "")}) {
-                Icon(imageVector = Icons.Default.Edit,
-                    contentDescription = null)
+            Button(onClick = {
+                navController.navigate(route = AppScreens.BookEditScreen.name + "/${book.id}")
+            }) {
+                Icon(
+                    imageVector = Icons.Default.Edit,
+                    contentDescription = null
+                )
             }
         }
 

@@ -66,6 +66,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.material.icons.extended)
     ksp("androidx.room:room-compiler:2.7.0-rc03")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

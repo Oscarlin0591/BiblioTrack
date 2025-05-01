@@ -7,7 +7,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.room.Query
 import com.example.bibliotrack.data.Book
 import com.example.bibliotrack.data.BooksRepository
 import kotlinx.coroutines.flow.SharingStarted
@@ -24,19 +23,20 @@ class BookEntryViewModel(private val booksRepository: BooksRepository) : ViewMod
         private const val TIMEOUT_MILLIS = 5_000L
     }
 
-    var bookListUiState: StateFlow<BookListUiState> by mutableStateOf(booksRepository.getAllBooksStream().map { BookListUiState(it) }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
-            initialValue = BookListUiState()
-        )
+    var bookListUiState: StateFlow<BookListUiState> by mutableStateOf(
+        booksRepository.getAllBooksStream().map { BookListUiState(it) }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
+                initialValue = BookListUiState()
+            )
     )
 
 
     var bookUiState by mutableStateOf(BookUiState())
         private set
 
-    fun updateListUiState(query: String){
+    fun updateListUiState(query: String) {
         bookListUiState = booksRepository.getQueryStream(query).map { BookListUiState(it) }
             .stateIn(
                 scope = viewModelScope,
@@ -65,6 +65,12 @@ class BookEntryViewModel(private val booksRepository: BooksRepository) : ViewMod
     suspend fun deleteItem(book: Book) {
         Log.d("Test", bookUiState.bookDetails.toBook().title)
         booksRepository.deleteBook(book)
+    }
+
+    suspend fun updateItem() {
+        if (validateInput(bookUiState.bookDetails)) {
+            booksRepository.updateBook(bookUiState.bookDetails.toBook())
+        }
     }
 
     fun changeColor(color: Color) {

@@ -2,21 +2,23 @@ package com.example.bibliotrack.screens
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.StarHalf
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
@@ -26,7 +28,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -36,27 +37,16 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalSavedStateRegistryOwner
-import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination
-import androidx.navigation.compose.rememberNavController
-import com.example.bibliotrack.AppViewModelProvider
-import com.example.bibliotrack.R
 import com.example.bibliotrack.data.Book
 import com.example.bibliotrack.model.BookEntryViewModel
 import com.example.bibliotrack.model.BookListUiState
-import com.example.bibliotrack.model.toBook
-import com.example.bibliotrack.model.toBookDetails
 import com.example.bibliotrack.navigation.AppBar
 import com.example.bibliotrack.navigation.AppScreens
 import kotlinx.coroutines.launch
@@ -125,7 +115,8 @@ fun DetailsScreen(
                 bookId = bookId,
                 onDelete = {
                     coroutineScope.launch {
-                        bookEntryViewModel.deleteItem(uiState.value.itemList[bookId])
+                        uiState.value.itemList.find { it.id == bookId }
+                            ?.let { it1 -> bookEntryViewModel.deleteItem(it1) }
                         navController.navigateUp()
                     }
                 },
@@ -146,9 +137,14 @@ private fun BookDetailBody(
 ) {
     Column {
         var deleteConfirmationRequired by rememberSaveable { mutableStateOf(false)  }
-        BookDetails(
-            book = bookListUiState.itemList[bookId],
-            modifier = Modifier.fillMaxWidth())
+        val book = bookListUiState.itemList.find{it.id == bookId}
+
+        if(book != null) {
+            BookDetails(
+                book = book,
+                modifier = Modifier.fillMaxWidth()
+            )
+
 
         OutlinedButton(
             onClick = { deleteConfirmationRequired = true},
@@ -166,6 +162,9 @@ private fun BookDetailBody(
                 onDeleteCancel = { deleteConfirmationRequired = false },
                 modifier = Modifier.padding(16.dp)
             )
+        }
+        } else {
+            Text("Book not found", modifier = Modifier.padding(16.dp))
         }
     }
 }
@@ -195,6 +194,8 @@ fun BookDetails(
             Text(text = "Pages: ${book.pagesRead}/${book.pages}")
             Text(text = "Ratings: ${book.rating}")
 
+            StarBar(book.rating)
+
         }
     }
 }
@@ -219,4 +220,26 @@ private fun DeleteConfirmationDialog(
                 Text("Yes")
             }
         })
+}
+
+@Composable
+private fun StarBar(
+    rating: Double,
+    modifier: Modifier = Modifier
+) {
+    Row(modifier = modifier) {
+        for (i in 1..5) {
+            val icon = when {
+                i <= rating -> Icons.Filled.Star
+                i - rating in 0.5..0.99 -> Icons.AutoMirrored.Filled.StarHalf
+                else -> Icons.Filled.StarBorder
+            }
+            Icon(
+                imageVector = icon,
+                contentDescription = "Rating",
+                tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                modifier = Modifier.size(24.dp)
+            )
+        }
+    }
 }

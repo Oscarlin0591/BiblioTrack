@@ -28,9 +28,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.bibliotrack.AppViewModelProvider
-import com.example.bibliotrack.data.Book
-import com.example.bibliotrack.model.BookDetails
-import com.example.bibliotrack.model.BookEditViewModel
 import com.example.bibliotrack.model.BookEntryViewModel
 import com.example.bibliotrack.screens.AboutScreen
 import com.example.bibliotrack.screens.AddBookScreen
@@ -50,7 +47,7 @@ fun AppBar(
     context: Context,
     bookEntryViewModel: BookEntryViewModel = viewModel(factory = AppViewModelProvider.Factory),
     modifier: Modifier
-    ) {
+) {
     val backStackEntry by navController.currentBackStackEntryAsState()
     val canNavigateBack = backStackEntry?.destination?.route != AppScreens.HomeScreen.name
     TopAppBar(
@@ -91,12 +88,12 @@ fun AppBar(
                 }
             }
             IconButton(
-                onClick = {navController.navigate(route = AppScreens.ColorChangeScreen.name)}
+                onClick = { navController.navigate(route = AppScreens.ColorChangeScreen.name) }
             ) {
                 Icon(Icons.Default.Settings, contentDescription = null)
             }
             IconButton(
-                onClick = {navController.navigate(route = AppScreens.AboutScreen.name)}
+                onClick = { navController.navigate(route = AppScreens.AboutScreen.name) }
             ) {
                 Icon(Icons.Default.Info, contentDescription = null)
             }
@@ -112,7 +109,6 @@ fun PlainBar(
     navigateUp: () -> Unit,
     textToShare: String,
     context: Context,
-//    bookViewModel: BookViewModel,
     modifier: Modifier
 ) {
     val backStackEntry by navController.currentBackStackEntryAsState()
@@ -139,11 +135,8 @@ fun PlainBar(
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun BookNavigation() {
-//    val bookDatabase: BookDatabase,
-//    val offlineBooksRepository: OfflineBooksRepository = OfflineBooksRepository(),
     val navController = rememberNavController()
     val bookEntryViewModel: BookEntryViewModel = viewModel(factory = AppViewModelProvider.Factory)
-    val bookEditViewModel: BookEditViewModel = viewModel(factory = AppViewModelProvider.Factory)
 
     NavHost(
         navController = navController,
@@ -164,10 +157,11 @@ fun BookNavigation() {
             )
         }
 
-        composable(route = AppScreens.DetailScreen.name + "/{bookId}",
-            arguments = listOf(navArgument(name = "bookId") { type = NavType.IntType})
+        composable(
+            route = AppScreens.DetailScreen.name + "/{bookId}",
+            arguments = listOf(navArgument(name = "bookId") { type = NavType.IntType })
         ) { backStackEntry ->
-            backStackEntry.arguments?.getInt("id")?.let {
+            backStackEntry.arguments?.getInt("bookId")?.let {
                 DetailsScreen(
                     navController = navController,
                     bookEntryViewModel = bookEntryViewModel,
@@ -195,11 +189,17 @@ fun BookNavigation() {
             )
         }
 
-        composable(AppScreens.BookEditScreen.name) {
-            BookEditScreen(
-                navController = navController,
-                viewModel = bookEditViewModel
-            )
+        composable(
+            AppScreens.BookEditScreen.name + "/{bookId}",
+            arguments = listOf(navArgument("bookId") { type = NavType.IntType })
+        ) { backStackEntry ->
+            backStackEntry.arguments?.getInt("bookId")?.let {
+                BookEditScreen(
+                    navController = navController,
+                    viewModel = bookEntryViewModel,
+                    it
+                )
+            }
         }
     }
 }
