@@ -50,7 +50,7 @@ fun ColorChangeScreen(
     fun DropDown() {
         Column {
             Row (modifier = Modifier.clickable { isExpanded.value = true }){
-                Text(colors[bookEntryViewModel.dropDownPosition], color = MaterialTheme.colorScheme.onPrimary)
+                Text(colors[bookEntryViewModel.dropDownPosition], color = Color.Black)//MaterialTheme.colorScheme.onPrimary)
                 Icon(Icons.Default.ArrowDropDown, contentDescription = null)
             }
         }
@@ -86,7 +86,7 @@ fun ColorChangeScreen(
         ) {
             Text(
                 "Change the background color by tapping a color:",
-                color = MaterialTheme.colorScheme.onPrimary,
+                color = Color.Black,//MaterialTheme.colorScheme.onPrimary,
                 style = MaterialTheme.typography.titleLarge
             )
             Box {

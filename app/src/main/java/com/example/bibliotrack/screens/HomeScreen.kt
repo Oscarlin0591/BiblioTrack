@@ -56,11 +56,11 @@ fun HomeScreen(
 
         Column (modifier = Modifier
             .fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally){
-            Text("Welcome to BiblioTrack!", modifier = Modifier.padding(bottom = 24.dp), color = MaterialTheme.colorScheme.onPrimary)
+            Text("Welcome to BiblioTrack!", modifier = Modifier.padding(bottom = 24.dp), color = Color.Black)//MaterialTheme.colorScheme.onPrimary)
             Button(onClick ={
                 navController.navigate(route = AppScreens.BookListScreen.name)}
             ) {
-                Text("Start")
+                Text("Start")//, color = Color.Black)
             }
         }
     }
