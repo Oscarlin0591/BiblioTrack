@@ -1,6 +1,5 @@
 package com.example.bibliotrack.model
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -58,7 +57,7 @@ class BookEntryViewModel(private val booksRepository: BooksRepository) : ViewMod
             chapters.isNotBlank() &&
             chapters.isDigitsOnly() &&
             pages.isNotBlank() &&
-            rating.isNotBlank()
+                    (rating.isNotBlank() && rating.toFloat() <= 5.0 && rating.toFloat() >= 0)
         }
     }
 
@@ -80,6 +79,10 @@ class BookEntryViewModel(private val booksRepository: BooksRepository) : ViewMod
 
     fun changeColor(color: Color) {
         this.backgroundColor = color
+    }
+
+    fun reset() {
+        updateUiState(BookDetails())
     }
 }
 
@@ -133,3 +136,5 @@ fun Book.toBookDetails(): BookDetails = BookDetails(
     rating = rating.toString(),
     createdAt = createdAt
 )
+
+

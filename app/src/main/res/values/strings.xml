@@ -13,6 +13,7 @@
     <string name="about_screen">About Screen</string>
     <string name="setting_screen">Setting Screen</string>
     <string name="add_book_screen">Add Book Screen</string>
+    <string name="dev_names">Oscar Lin and Jacob Levin</string>
 
 
 </resources>

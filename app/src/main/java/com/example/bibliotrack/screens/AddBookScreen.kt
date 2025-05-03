@@ -2,19 +2,23 @@ package com.example.bibliotrack.screens
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -35,6 +39,7 @@ fun AddBookScreen(
     bookEntryViewModel: BookEntryViewModel = viewModel()
 ) {
     val coroutineScope = rememberCoroutineScope()
+
     Scaffold(
         topBar = {
             PlainBar(
@@ -54,6 +59,7 @@ fun AddBookScreen(
             onSaveClick = {
                 coroutineScope.launch {
                     bookEntryViewModel.saveBook()
+                    bookEntryViewModel.reset()
                     navController.navigateUp()
                 }
             }
@@ -70,50 +76,93 @@ fun BookForm(
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
+        verticalArrangement = Arrangement.Center,
+        modifier = modifier
             .fillMaxWidth()
             .padding(top = 100.dp)
     ) {
         Text("Title:")
-        TextField(
+        OutlinedTextField(
             value = bookDetails.title,
             onValueChange = { onValueChange(bookDetails.copy(title = it)) },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                unfocusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                disabledContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+            )
         )
 
         Text("Author:")
-        TextField(
+        OutlinedTextField(
             value = bookDetails.author,
             onValueChange = { onValueChange(bookDetails.copy(author = it)) },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                unfocusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                disabledContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+            )
         )
 
         Text("Total chapters:")
-        TextField(
+        OutlinedTextField(
             value = bookDetails.chapters,
             onValueChange = { onValueChange(bookDetails.copy(chapters = it)) },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                unfocusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                disabledContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+            )
         )
 
         Text("Chapters read:")
-        TextField(
+        OutlinedTextField(
             value = bookDetails.chaptersRead,
             onValueChange = { onValueChange(bookDetails.copy(chaptersRead = it)) },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                unfocusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                disabledContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+            )
         )
 
         Text("Total pages:")
-        TextField(
+        OutlinedTextField(
             value = bookDetails.pages,
             onValueChange = { onValueChange(bookDetails.copy(pages = it)) },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                unfocusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                disabledContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+            )
         )
 
         Text("Pages read:")
-        TextField(
+        OutlinedTextField(
             value = bookDetails.pagesRead,
             onValueChange = { onValueChange(bookDetails.copy(pagesRead = it)) },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                unfocusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                disabledContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+            )
         )
 
         Text("Rating:")
-        TextField(
+        OutlinedTextField(
             value = bookDetails.rating,
             onValueChange = { onValueChange(bookDetails.copy(rating = it)) },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                unfocusedContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+                disabledContainerColor = MaterialTheme.colorScheme.secondaryContainer,
+            )
         )
 
     }
@@ -126,16 +175,21 @@ fun BookEntryBody(
     onSaveClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column() {
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+
+    ) {
         BookForm(
             bookDetails = bookUiState.bookDetails,
             onValueChange = onBookValueChange,
-            modifier = Modifier.fillMaxWidth()
+            modifier = modifier.fillMaxWidth()
         )
         Button(
             onClick = onSaveClick,
             enabled = bookUiState.isEntryValid,
             shape = MaterialTheme.shapes.small,
+            modifier = modifier.fillMaxWidth(.7f).padding(top = 16.dp)
         ) {
             Text("Save")
         }

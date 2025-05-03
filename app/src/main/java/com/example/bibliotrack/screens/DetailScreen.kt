@@ -62,17 +62,18 @@ fun DetailsScreen(
 ) {
     val uiState = bookEntryViewModel.bookListUiState.collectAsState()
     val coroutineScope = rememberCoroutineScope()
+    val book = uiState.value.itemList.find{it.id == bookId}
 
     Scaffold(
         topBar = {
-            uiState.value.itemList.find { it.id == bookId }?.let {
+            if (book != null) {
                 AppBar(
                     currentScreen = AppScreens.DetailScreen.name,
                     navController = navController,
                     navigateUp = { navController.navigateUp() },
                     context = LocalContext.current,
-                    textToShare = it.title,
-                    textToShare1 = "${it.chaptersRead/it.chapters} read",
+                    textToShare = "Title",
+                    textToShare1 = "Check out this book! \n${book.title}: ${book.chaptersRead}/${book.chapters} chapters read",
                     bookEntryViewModel = bookEntryViewModel,
                     modifier = Modifier
                 )

@@ -1,3 +1,4 @@
+import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -16,11 +17,11 @@ import kotlin.jvm.Throws
 @RunWith(AndroidJUnit4::class)
 class InstrumentedTest {
     @get:Rule
-    val activityRule = ActivityScenarioRule(MainActivity::class.java)
+    val activityRule = createAndroidComposeRule<MainActivity>()
 
     @Test
     @Throws(Exception::class)
-    fun clickStart() {
+    fun clickStartTest() {
         onView(withText("Start")).perform(click())
         onView(withText("BookListScreen"))
             .check(matches(isDisplayed()))

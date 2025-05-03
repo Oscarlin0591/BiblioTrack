@@ -50,14 +50,14 @@ fun BookEditScreen(
             onSaveClick = {
                 coroutineScope.launch {
                     viewModel.updateItem()
+                    viewModel.reset()
                     navController.navigateUp()
                 }
             },
             modifier = Modifier
                 .padding(
                     start = innerPadding.calculateStartPadding(LocalLayoutDirection.current),
-                    end = innerPadding.calculateEndPadding(LocalLayoutDirection.current),
-                    top = innerPadding.calculateTopPadding()
+                    end = innerPadding.calculateEndPadding(LocalLayoutDirection.current)
                 )
                 .verticalScroll(rememberScrollState())
         )

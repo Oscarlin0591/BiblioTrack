@@ -11,7 +11,7 @@
         </item>
         <item name="android:windowSplashScreenAnimationDuration">1000</item>
         <item name="android:windowSplashScreenIconBackgroundColor">#FFCDEDA3</item>
-        <item name="android:windowSplashScreenBrandingImage">@drawable/bibliotrack_icon
+        <item name="android:windowSplashscreenContent">@string/dev_names
         </item>
     </style>
 </resources>
