@@ -1,5 +1,12 @@
 package com.example.bibliotrack.screens
 
+/*
+BiblioTrack
+Author: Jacob Levin & Oscar Lin
+04/12/2025
+DetailsScreen is the composable containing the Book's information
+ */
+
 import android.annotation.SuppressLint
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Arrangement
@@ -62,8 +69,9 @@ fun DetailsScreen(
 ) {
     val uiState = bookEntryViewModel.bookListUiState.collectAsState()
     val coroutineScope = rememberCoroutineScope()
-    val book = uiState.value.itemList.find{it.id == bookId}
+    val book = uiState.value.itemList.find{it.id == bookId} //find the chosen book's id and returns the book
 
+    // populates the screen with the book's information
     Scaffold(
         topBar = {
             if (book != null) {
@@ -109,7 +117,7 @@ fun DetailsScreen(
             BookDetailBody(
                 bookListUiState = uiState.value,
                 bookId = bookId,
-                onDelete = {
+                onDelete = { // deletes the book and redirects user back to the list screen
                     coroutineScope.launch {
                         uiState.value.itemList.find { it.id == bookId }
                             ?.let { it1 -> bookEntryViewModel.deleteItem(it1) }
@@ -124,6 +132,8 @@ fun DetailsScreen(
     }
 
 }
+
+//composable containing the body of the book details
 @Composable
 private fun BookDetailBody(
     bookListUiState: BookListUiState,
@@ -141,7 +151,7 @@ private fun BookDetailBody(
                 modifier = Modifier.fillMaxWidth()
             )
 
-
+        //button containing the delete functionality
         OutlinedButton(
             onClick = { deleteConfirmationRequired = true},
             shape = MaterialTheme.shapes.small,
@@ -172,7 +182,7 @@ private fun BookDetailBody(
 }
 
 @Composable
-fun BookDetails(
+fun BookDetails( // main composable with all of the book's details
     book: Book,
     modifier: Modifier = Modifier
 ) {
@@ -203,7 +213,7 @@ fun BookDetails(
 }
 
 @Composable
-private fun DeleteConfirmationDialog(
+private fun DeleteConfirmationDialog( // deletion dialog for better UX
     onDeleteConfirm: () -> Unit,
     onDeleteCancel: () -> Unit,
     modifier: Modifier = Modifier
@@ -225,7 +235,7 @@ private fun DeleteConfirmationDialog(
 }
 
 @Composable
-private fun StarBar(
+private fun StarBar( //star bar that returns stars based on the user given rating
     rating: Double,
     modifier: Modifier = Modifier
 ) {

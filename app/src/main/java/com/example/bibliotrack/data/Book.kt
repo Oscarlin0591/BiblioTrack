@@ -1,5 +1,13 @@
 package com.example.bibliotrack.data
 
+/*
+BiblioTrack
+Author: Jacob Levin & Oscar Lin
+04/12/2025
+This is the Book data class that defines the
+parameters that the Book class contains
+ */
+
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.util.Date

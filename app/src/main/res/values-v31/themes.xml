@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-        <style name="Base.Theme.SplashScreen" parent="Theme.Material3.DayNight.NoActionBar">
+        <style name="Base.Theme.BiblioTrackSplashScreen" parent="Theme.Material3.DayNight.NoActionBar">
 
         </style>
-        <style name="Theme.SplashScreen" parent="Base.Theme.SplashScreen"/>
-    <style name="SplashApi" parent="Theme.SplashScreen">
+        <style name="Theme.BiblioTrackSplashScreen" parent="Base.Theme.BiblioTrackSplashScreen"/>
+    <style name="Theme.App.SplashScreen" parent="Theme.SplashScreen">
         <item name="android:windowSplashScreenBackground">#FFCDEDA3</item>
-        <item name="android:windowSplashScreenAnimatedIcon">@drawable/bibliotrack_icon
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/bibliotrack_icon_png
         </item>
-        <item name="android:windowSplashScreenAnimationDuration">1000</item>
+        <item name="android:windowSplashScreenAnimationDuration">2000</item>
         <item name="android:windowSplashScreenIconBackgroundColor">#FFCDEDA3</item>
         <item name="android:windowSplashscreenContent">@string/dev_names
         </item>
+        <item name="postSplashScreenTheme">@style/Base.Theme.BiblioTrackSplashScreen</item>
     </style>
 </resources>

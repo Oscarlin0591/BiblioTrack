@@ -1,7 +1,11 @@
 package com.example.bibliotrack.navigation
 
-import com.example.bibliotrack.screens.AddBookScreen
-import com.example.bibliotrack.screens.BookEditScreen
+/*
+BiblioTrack
+Author: Jacob Levin & Oscar Lin
+04/12/2025
+Screen enum class that defines values for navigation
+ */
 
 enum class AppScreens {
     HomeScreen,

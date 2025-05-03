@@ -1,5 +1,12 @@
 package com.example.bibliotrack.screens
 
+/*
+BiblioTrack
+Author: Jacob Levin & Oscar Lin
+04/12/2025
+ColorChangeScreen contains the functionality to change the app's background color
+ */
+
 import android.annotation.SuppressLint
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.clickable
@@ -44,10 +51,10 @@ fun ColorChangeScreen(
     bookEntryViewModel: BookEntryViewModel
 ) {
     val isExpanded = remember { mutableStateOf(false) }
-    val colors = listOf("Light","Dark", "Default", "Yellow", "Purple", "Green")
+    val colors = listOf("Light","Dark", "Default", "Yellow", "Purple", "Green") // pre-defined list of Colors
     val defaultColor = MaterialTheme.colorScheme.secondary
     @Composable
-    fun DropDown() {
+    fun DropDown() { // dropdown menu
         Column {
             Row (modifier = Modifier.clickable { isExpanded.value = true }){
                 Text(colors[bookEntryViewModel.dropDownPosition], color = Color.Black)//MaterialTheme.colorScheme.onPrimary)
@@ -56,7 +63,7 @@ fun ColorChangeScreen(
         }
     }
 
-
+    //selected color values calls the color change function in the viewModel
     Scaffold(
         topBar = {
             PlainBar(

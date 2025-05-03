@@ -1,5 +1,12 @@
 package com.example.bibliotrack.screens
 
+/*
+BiblioTrack
+Author: Jacob Levin & Oscar Lin
+04/12/2025
+Composable that contains the scrollable list with all of the user's entries
+ */
+
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.clickable
@@ -105,6 +112,7 @@ fun BookListScreen(
                     .fillMaxWidth()
                     .padding(vertical = 8.dp)
             ) {
+                // search bar functionality that queries the database to display a matching book
                 TextField(
                     onValueChange = {
                         bookEntryViewModel.query = it
@@ -129,7 +137,7 @@ fun BookListScreen(
                 LazyVerticalGrid(
                     //lazy column for all the books
                     columns = GridCells.Fixed(1)
-                ) {
+                ) { // populates the lazy grid with all items from the database
                     items(items = bookListUiState.itemList, key = { it.id }) { book ->
                         BookCard(
                             book = book,
@@ -150,6 +158,7 @@ fun BookListScreen(
 
 }
 
+//BookCard composable containing the title and author
 @Composable
 fun BookCard(
     book: Book,
@@ -185,14 +194,14 @@ fun BookCard(
                     style = MaterialTheme.typography.titleMedium,
                     modifier = Modifier.padding(start = 10.dp)
                 )
-                Text( // book genre
+                Text( // book author
                     text = "Author: ${book.author}",
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.padding(start = 10.dp)
                 )
 
             }
-            Button(onClick = {
+            Button(onClick = { //button to access the edit screen
                 navController.navigate(route = AppScreens.BookEditScreen.name + "/${book.id}")
             }) {
                 Icon(

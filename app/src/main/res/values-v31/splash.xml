@@ -3,9 +3,9 @@
 
     <style name="Theme.App.Starting" parent="Theme.SplashScreen">
         <item name="android:windowSplashScreenBackground">#FFCDEDA3</item>
-        <item name="android:windowSplashScreenAnimatedIcon">@drawable/bibliotrack_icon</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/bibliotrack_icon_png</item>
         <item name="android:windowSplashScreenAnimationDuration">1000</item>
         <item name="android:windowSplashScreenIconBackgroundColor">#FFCDEDA3</item>
-        <item name="android:windowSplashScreenBrandingImage">@drawable/bibliotrack_icon</item>
+        <item name="android:windowSplashScreenBrandingImage">@drawable/bibliotrack_icon_png</item>
     </style>
 </resources>

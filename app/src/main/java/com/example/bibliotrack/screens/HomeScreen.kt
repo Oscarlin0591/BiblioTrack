@@ -1,5 +1,12 @@
 package com.example.bibliotrack.screens
 
+/*
+BiblioTrack
+Author: Jacob Levin & Oscar Lin
+04/12/2025
+HomeScreen is the landing screen the user starts at.
+ */
+
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -60,7 +67,7 @@ fun HomeScreen(
             Button(onClick ={
                 navController.navigate(route = AppScreens.BookListScreen.name)}
             ) {
-                Text("Start")//, color = Color.Black)
+                Text("Start")
             }
         }
     }

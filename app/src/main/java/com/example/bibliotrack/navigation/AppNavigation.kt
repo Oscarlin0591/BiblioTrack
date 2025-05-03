@@ -1,5 +1,12 @@
 package com.example.bibliotrack.navigation
 
+/*
+BiblioTrack
+Author: Jacob Levin & Oscar Lin
+04/12/2025
+Central navigation class that handles all of the app's navigation
+ */
+
 import android.content.Context
 import android.content.Intent
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -50,9 +57,9 @@ fun AppBar(
     bookEntryViewModel: BookEntryViewModel = viewModel(factory = AppViewModelProvider.Factory),
     modifier: Modifier
 ) {
-    val backStackEntry by navController.currentBackStackEntryAsState()
-    val canNavigateBack = backStackEntry?.destination?.route != AppScreens.HomeScreen.name
-    TopAppBar(
+    val backStackEntry by navController.currentBackStackEntryAsState() // backstack entry
+    val canNavigateBack = backStackEntry?.destination?.route != AppScreens.HomeScreen.name // navigate back boolean
+    TopAppBar( //custom top app bar
         title = { Text("BiblioTrack", color = MaterialTheme.colorScheme.primaryContainer) },
         colors = TopAppBarDefaults.mediumTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.primary
@@ -69,7 +76,7 @@ fun AppBar(
                 }
             }
         },
-        actions = {
+        actions = { //action to initialize share function when there is text to share
             if (textToShare.isNotEmpty()) {
                 IconButton(onClick = {
                     val intent = Intent(Intent.ACTION_SEND).apply {
@@ -92,12 +99,12 @@ fun AppBar(
                     )
                 }
             }
-            IconButton(
+            IconButton( // button to navigate to setting screen
                 onClick = { navController.navigate(route = AppScreens.ColorChangeScreen.name) }
             ) {
                 Icon(Icons.Default.Settings, tint = MaterialTheme.colorScheme.primaryContainer, contentDescription = null)
             }
-            IconButton(
+            IconButton( // button to navigate to about screen
                 onClick = { navController.navigate(route = AppScreens.AboutScreen.name) }
             ) {
                 Icon(Icons.Default.Info, tint = MaterialTheme.colorScheme.primaryContainer, contentDescription = null)
@@ -106,6 +113,7 @@ fun AppBar(
     )
 }
 
+// Plain bar for screens like add book or edit where there is no need for navigation to other screens
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PlainBar(
@@ -136,6 +144,7 @@ fun PlainBar(
     )
 }
 
+//navigation composable containing the navhost that handles navigation to screens via routes
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun BookNavigation() {
@@ -162,7 +171,7 @@ fun BookNavigation() {
         }
 
         composable(
-            route = AppScreens.DetailScreen.name + "/{bookId}",
+            route = AppScreens.DetailScreen.name + "/{bookId}", //routes so each book has its unique data passed into the next screen
             arguments = listOf(navArgument(name = "bookId") { type = NavType.IntType })
         ) { backStackEntry ->
             backStackEntry.arguments?.getInt("bookId")?.let {

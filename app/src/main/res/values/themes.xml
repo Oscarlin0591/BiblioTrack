@@ -6,9 +6,9 @@
     <style name="Theme.SplashScreen" parent="Base.Theme.SplashScreen"/>
     <style name="SplashApi" parent="Theme.SplashScreen">
         <item name="android:windowSplashScreenBackground" tools:ignore="NewApi">#FFCDEDA3</item>
-        <item name="android:windowSplashScreenAnimatedIcon">@drawable/bibliotrack_icon</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/bibliotrack_icon_png</item>
         <item name="android:windowSplashScreenAnimationDuration">1000</item>
         <item name="android:windowSplashScreenIconBackgroundColor">#FFCDEDA3</item>
-        <item name="android:windowSplashScreenBrandingImage">@drawable/bibliotrack_icon</item>
+        <item name="android:windowSplashScreenBrandingImage">@drawable/bibliotrack_icon_png</item>
     </style>
 </resources>

@@ -1,4 +1,11 @@
 package com.example.bibliotrack.data
+/*
+BiblioTrack
+Author: Jacob Levin & Oscar Lin
+04/12/2025
+Repository interface that defines functions on the database
+through the DAO.
+ */
 
 import kotlinx.coroutines.flow.Flow
 

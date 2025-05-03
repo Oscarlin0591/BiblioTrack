@@ -1,5 +1,12 @@
 package com.example.bibliotrack.screens
 
+/*
+BiblioTrack
+Author: Jacob Levin & Oscar Lin
+04/12/2025
+UI Composable to add a book to your app
+ */
+
 import android.annotation.SuppressLint
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Arrangement
@@ -56,7 +63,7 @@ fun AddBookScreen(
         BookEntryBody(
             bookUiState = bookEntryViewModel.bookUiState,
             onBookValueChange = bookEntryViewModel::updateUiState,
-            onSaveClick = {
+            onSaveClick = { // calls function from view model to save book, reset textfields, and navigates back.
                 coroutineScope.launch {
                     bookEntryViewModel.saveBook()
                     bookEntryViewModel.reset()
@@ -67,6 +74,7 @@ fun AddBookScreen(
     }
 }
 
+// Form composable containing textfields
 @Composable
 fun BookForm(
     bookDetails: BookDetails,

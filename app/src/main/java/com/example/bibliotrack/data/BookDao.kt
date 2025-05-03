@@ -1,5 +1,12 @@
 package com.example.bibliotrack.data
 
+/*
+BiblioTrack
+Author: Jacob Levin & Oscar Lin
+04/12/2025
+Dao interface to define database functions
+ */
+
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -8,6 +15,7 @@ import androidx.room.Query
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
+// database DAO interface to define SQL
 @Dao
 interface BookDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)

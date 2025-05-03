@@ -1,5 +1,14 @@
 package com.example.bibliotrack
 
+/*
+BiblioTrack
+Author: Jacob Levin & Oscar Lin
+04/12/2025
+BiblioTrack is an app to keep track of your reads
+and share with your friends what books you've been
+reading
+ */
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -14,7 +23,6 @@ import com.example.bibliotrack.ui.theme.AppTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        enableEdgeToEdge()
         installSplashScreen()
         setContent {
             AppTheme{

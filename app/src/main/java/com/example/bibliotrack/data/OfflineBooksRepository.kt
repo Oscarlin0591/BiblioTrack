@@ -1,8 +1,18 @@
 package com.example.bibliotrack.data
 
+/*
+BiblioTrack
+Author: Jacob Levin & Oscar Lin
+04/12/2025
+BiblioTrack is an app to keep track of your reads
+and share with your friends what books you've been
+reading
+ */
+
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 
+// Repository class with all database functions
 class OfflineBooksRepository(private val bookDao: BookDao) : BooksRepository {
     override fun getAllBooksStream(): Flow<List<Book>> =
         bookDao.getAllBooks()

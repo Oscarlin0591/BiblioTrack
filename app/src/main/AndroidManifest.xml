@@ -7,15 +7,15 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/bibliotrack_icon"
+        android:icon="@drawable/bibliotrack_icon_png"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/bibliotrack_icon"
+        android:roundIcon="@drawable/bibliotrack_icon_png"
         android:supportsRtl="true"
         android:theme="@style/Theme.SplashScreen"
         tools:targetApi="31">
         <activity
             android:name=".MainActivity"
-            android:theme="@style/SplashApi"
+            android:theme="@style/Theme.App.SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

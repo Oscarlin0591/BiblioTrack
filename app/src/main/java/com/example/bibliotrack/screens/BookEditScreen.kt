@@ -1,4 +1,10 @@
 package com.example.bibliotrack.screens
+/*
+BiblioTrack
+Author: Jacob Levin & Oscar Lin
+04/12/2025
+BookEditScreen to update a given book's details by the user
+ */
 
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
@@ -28,7 +34,7 @@ fun BookEditScreen(
     bookId: Int
 ) {
     val uiState = viewModel.bookListUiState.collectAsState()
-    if (uiState.value.itemList.find { it.id == bookId } != null) {
+    if (uiState.value.itemList.find { it.id == bookId } != null) { //searches for the book to find the exact book the user clicked
         val currentBookDetails = uiState.value.itemList.find { it.id == bookId }!!.toBookDetails()
         viewModel.updateUiState(currentBookDetails)
     }
@@ -44,7 +50,7 @@ fun BookEditScreen(
             )
         },
     ) { innerPadding ->
-        BookEntryBody(
+        BookEntryBody( // same uiState with the given book's information
             bookUiState = viewModel.bookUiState,
             onBookValueChange = viewModel::updateUiState,
             onSaveClick = {
